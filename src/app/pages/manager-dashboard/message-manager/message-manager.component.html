@@ -1,0 +1,54 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<div style="margin-top: 18px; margin-bottom: 18px;" class="container">
+
+    <div class="content-wrapper">
+
+        <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="card m-0"
+                    style="border-radius: 18px 0px 0px 18px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);">
+
+                    <div class="row no-gutters">
+                        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-3 col-3">
+                            <div class="users-container" style="background: #EFEFEF; border-radius: 18px 0px 0px 18px;">
+                                <ul class="users" *ngFor="let user of userList">
+                                    <li class="person" data-chat="person1" style="display: flex; align-items: center;"
+                                        (click)="openPrivateChat(user.email, user.username, user.imgPath)">
+                                        <div class="user">
+                                            <img src={{user.imgPath}} alt="Wemade" />
+                                            <span class="status busy"></span>
+                                        </div>
+                                        <div class="name-time" style="width: 100%;">
+                                            <div style="display: flex; flex-direction: column;">
+                                                <div>
+                                                    <span class="name">{{ user.username }}</span>
+                                                    <!-- <span class="time">15/02/2024</span> -->
+                                                </div>
+                                                <div>
+                                                    <div class="small-message">{{user.lastMessage}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-9 col-9">
+                            <div class="selected-user">
+                                <span><span class="name fs-5">{{ toName}}</span></span>
+                            </div>
+                            <div class="chat-container">
+                                <app-message-dialog [messages]="chatService.privateMessages"
+                                    [toImg]="toImg"></app-message-dialog>
+                                <app-chat-input (contentEmitter)="sendMessage($event)"></app-chat-input>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

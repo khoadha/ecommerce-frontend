@@ -1,0 +1,24 @@
+<app-loader [loader]="loading"></app-loader>
+  <div class="d-flex justify-content-center">
+    <textarea class="w-100" [autoResize]="true"
+      placeholder="Hãy nhập miêu tả của hình ảnh bạn muốn tại đây, ví dụ: túi màu đen làm từ nhung,..."
+      maxlength="500" pInputTextarea [(ngModel)]="data"></textarea>
+  </div>
+  <div class="d-flex mt-3 align-items-center gap-3">
+    <button mat-stroked-button (click)="submit()" [ngClass]="{'text-light bg-secondary': !data, 'text-light pastel-bg': data}"
+    [disabled]="!data">Gửi yêu cầu bằng văn bản</button>
+    <div class="web-font">hoặc</div>
+    <button mat-stroked-button (click)="fileInput.click()" class="pastel-bg text-light d-flex align-items-center">Tìm hình ảnh tương tự <mat-icon class="ms-2">cloud_upload</mat-icon></button>
+    <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event, 'image')" hidden>
+  </div>
+  
+  <ng-container *ngIf="listImgStr.length>0">
+    <div class="row row-cols-1 row-cols-md-5 mb-3 mt-5 px-3 d-flex">
+      <ng-container *ngFor="let src of listImgStr">
+        <div [pTooltip]="'Chọn ảnh này'" tooltipPosition="top" (click)="onChooseImage(src)" class="card-container card px-2 mb-2 border-0" style="cursor: pointer;">
+          <img loading="lazy" [src]="src" (error)="URLhandleImageError($event)" class="card-img" alt="Ảnh minh họa">
+        </div>
+      </ng-container>
+    </div>
+  </ng-container>
+

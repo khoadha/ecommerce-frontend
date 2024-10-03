@@ -1,0 +1,103 @@
+<app-loader [loader]="isLoading"></app-loader>
+
+<div class="auth-bg-image">
+    <div class="container-fluid">
+        <div class="row justify-content-center">
+            <form [formGroup]="signUpForm" (ngSubmit)="onSignUp()" class="col-md-4 py-5">
+                <mat-card class="rounded-4" style="background-color: whitesmoke;">
+                    <mat-card-header style="display:block;">
+                        <mat-card-title class="text-center">
+                            <p class="web-font fs-2 my-5 text-dark fw-bolder">Tạo tài khoản Wemade</p>
+                        </mat-card-title>
+                    </mat-card-header>
+                    <mat-card-content>
+                        <div class="row mt-4">
+                            <mat-form-field color="primary" appearance="fill">
+                                <mat-label>Tên người dùng</mat-label>
+                                <input type="text" matInput #input placeholder="e.g. wemadeuser"
+                                    formControlName="userName">
+                                <mat-icon matSuffix>person</mat-icon>
+                                <mat-hint class="text-warning" *ngIf="signUpForm.get('userName')!.invalid 
+                            && signUpForm.get('userName')!.dirty">Mục này phải dài từ 8-14 kí tự, bao gồm chữ cái viết
+                                    thường và chữ số</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="row mt-4">
+                            <mat-form-field color="primary" appearance="fill">
+                                <mat-label>Email</mat-label>
+                                <input matInput placeholder="e.g. wemadeuser@gmail.com" formControlName="email">
+                                <mat-icon matSuffix>alternate_email</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="row mt-4">
+                            <mat-form-field color="primary" appearance="fill">
+                                <mat-label>Số điện thoại</mat-label>
+                                <input matInput placeholder="Nhập số điện thoại tại đây" formControlName="phoneNumber">
+                                <mat-icon matSuffix>phone</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div class="row mt-2 d-flex flex-column">
+                            <p-divider align="center">
+                                <span class="text-secondary">Chọn ảnh đại diện</span>
+                            </p-divider>
+                            <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event, 'image')" formControlName="image"
+                                hidden>
+                            <button class="mx-auto my-4" type="button" mat-icon-button (click)="fileInput.click()"
+                                [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
+                                <mat-icon>{{!isImageSelected ? 'image' : 'download_done'}}</mat-icon></button>
+                            <div *ngIf="isImageSelected" class="main-image-container">
+                                <img [src]="getImagePreviewUrl()" alt="Profile" class="img-preview">
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <mat-form-field color="primary" appearance="fill">
+                                <mat-label>Mật khẩu</mat-label>
+                                <input matInput minlength="8" [type]="pwHide ? 'password' : 'text'"
+                                    formControlName="password">
+                                <button type="button" mat-icon-button matSuffix (click)="pwHide = !pwHide"
+                                    [attr.aria-label]="'Hide password'" [attr.aria-pressed]="pwHide">
+                                    <mat-icon>{{pwHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-hint class="text-warning" *ngIf="signUpForm.get('password')!.invalid 
+                            && signUpForm.get('password')!.dirty">
+                                    Mục này phải bao gồm ít nhất 8 kí tự, trong đó có ít nhất 1 kí tự đặc biệt, 1 chữ
+                                    viết hoa, 1 chữ viết và 1 chữ số
+                                </mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <div class="row mt-3">
+                            <mat-form-field color="primary" appearance="fill">
+                                <mat-label>Nhập lại mật khẩu</mat-label>
+                                <input matInput [type]="cpwHide ? 'password' : 'text'"
+                                    formControlName="confirmedPassword">
+                                <button type="button" mat-icon-button matSuffix (click)="cpwHide = !cpwHide"
+                                    [attr.aria-label]="'Hide confirm password'" [attr.aria-pressed]="cpwHide">
+                                    <mat-icon>{{cpwHide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                                </button>
+                                <mat-hint class="text-warning" *ngIf="signUpForm.get('confirmedPassword')!.invalid 
+                            && signUpForm.get('confirmedPassword')!.dirty">Mục này phải giống mật khẩu</mat-hint>
+                            </mat-form-field>
+                        </div>
+                        <mat-checkbox formControlName="agreeCheckBox" class="mb-2 text-light border-none"><span
+                                class="text-dark web-font">Tôi đã đọc và đồng ý với </span><a
+                                class="text-decoration-none pastel web-font fw-bold" routerLink="/term-of-use"
+                                target="_blank">điều khoản sử dụng</a></mat-checkbox>
+                        <p-divider></p-divider>
+                    </mat-card-content>
+                    <mat-card-footer>
+                        <h6 class="text-center text-dark web-font">Đã có tài khoản? <a
+                                class="text-decoration-none pastel fw-bold" routerLink="/sign-in">Đăng nhập</a> ngay!
+                        </h6>
+                        <p-divider></p-divider>
+                    </mat-card-footer>
+                    <mat-card-actions class="pb-4 px-5 pt-4">
+                            <button class="w-100" mat-stroked-button
+                                [ngClass]="{'text-secondary': !signUpForm.valid, 'auth-button': signUpForm.valid}"
+                                [disabled]="!signUpForm.valid">Đăng ký ngay</button>
+                        
+                    </mat-card-actions>
+                </mat-card>
+            </form>
+        </div>
+    </div>
+</div>

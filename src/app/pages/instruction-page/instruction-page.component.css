@@ -1,0 +1,14 @@
+img {
+  width: 100%;
+  height: auto;
+}
+
+.dflex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.auth-bg-image {
+  background: #999b6d49; 
+}

@@ -1,0 +1,19 @@
+<div class="d-flex flex-column w-100">
+        <div class="d-flex flex-wrap gap-3 mb-4 align-items-center">
+            <label htmlFor="report">Đánh giá của bạn:</label>
+            <p-rating [required]="true" class="ms-3" [(ngModel)]="rating"></p-rating>
+        </div>
+    <div class="d-flex flex-column gap-2">
+        <textarea placeholder="Hãy cho chúng tôi biết về trải nghiệm của bạn với sản phẩm này nhé!" rows="5" cols="30" pInputTextarea [(ngModel)]="description"></textarea>
+    </div>
+    <div class="card mt-4 d-flex justify-content-center">
+        <p-toast></p-toast>
+        <p-fileUpload chooseLabel="Hình ảnh đánh giá" cancelLabel="Xóa tất cả" #uploadedFiles [showUploadButton]="false"
+            [multiple]="true" accept="image/*"></p-fileUpload>
+    </div>
+    <button (click)="onSubmitFeedback()" class="w-100 submit-button mt-4" mat-stroked-button>
+        Tạo đơn
+    </button>
+</div>
+<app-loader [loader]="isLoading"></app-loader>
+<p-toast></p-toast>

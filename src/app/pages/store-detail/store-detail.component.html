@@ -1,0 +1,117 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<p-toast></p-toast>
+<ng-container *ngIf="store">
+    <div class="container-fluid p-0">
+        <section class="h-100 gradient-custom">
+            <div class="container py-5 h-100">
+                <div class="row d-flex justify-content-center align-items-center h-100 mb-0">
+                    <div class="col-12">
+                        <div class="card">
+                            <div class="thumbnail-image" [style.background-image]="'url(' + store.thumbnailImgPath + ')'">
+                                <div class="ms-4 mt-5 d-flex flex-row" style="width: 200px; position: absolute; bottom: 0;">
+                                    <img [src]="store.imgPath" alt="placeholder image"
+                                        class="img-fluid img-thumbnail mt-4 mb-2" style="width: 200px; z-index: 1">
+                                    <div class="mt-auto mb-2 ms-3 d-flex flex-row">
+                                        <ng-container *ngIf="store.isVerified; else isNotVerified">
+                                            <button class="ms-4 text-primary bg-light noCursor" mat-icon-button
+                                                #tooltip="matTooltip" matTooltip="Cửa hàng đã được xác minh"
+                                                matTooltipPosition="above"
+                                                color="accent"><mat-icon>check</mat-icon></button>
+                                        </ng-container>
+                                        <ng-template #isNotVerified>
+                                            <button class="ms-4 bg-light noCursor" mat-icon-button #tooltip="matTooltip"
+                                                matTooltip="Cửa hàng chưa được xác minh" matTooltipPosition="above"
+                                                color="warn"><mat-icon>gpp_bad</mat-icon></button>
+                                        </ng-template>
+                                        <ng-container *ngIf="!store.isOpen; else isOpen">
+    
+                                            <button class="ms-3 bg-light noCursor" mat-icon-button #tooltip="matTooltip"
+                                                matTooltip="Cửa hàng hiện đang đóng cửa" matTooltipPosition="above"
+                                                color="warn"><mat-icon>lock</mat-icon></button>
+                                        </ng-container>
+                                        <ng-template #isOpen>
+                                            <button class="ms-3 text-success bg-light noCursor" mat-icon-button
+                                                #tooltip="matTooltip" matTooltip="Cửa hàng hiện đang mở cửa"
+                                                matTooltipPosition="above"><mat-icon>lock_open</mat-icon></button>
+                                        </ng-template>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4 pt-0 px-0 text-black" style="background-color: #f8f9fa;">
+                                <div class="pastel-bg d-flex flex-row justify-content-between align-items-center">
+                                    <p class="web-font fs-2 lh-sm text-white ps-4 py-4 fw-bold mb-0">{{store.name}}</p>
+                                    <div>
+                                        <button class="bg-white pastel me-4" (click)="showDialog()" mat-raised-button>Liên
+                                            hệ <mat-icon>contacts</mat-icon></button>
+                                        <button class="bg-danger text-light me-4" (click)="onClickReport()" mat-raised-button>Báo cáo
+                                            <mat-icon>report</mat-icon></button>
+                                        </div>
+    
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center mt-2">
+                                    <p-dialog header="Thông tin liên hệ" [(visible)]="visible" [style]="{width: '30vw'}">
+                                        <mat-list class="p-0">
+                                            <mat-list-item class="p-0">
+                                                <span class="web-font pastel">Email cửa hàng: 
+                                                    <span class="fw-bold">{{this.store.storeEmail}}</span>
+                                                </span>
+                                            </mat-list-item>
+                                            <button (click)="onClickChat()" class="ms-auto mt-3 message-button pastel-bg text-white"
+                                                mat-flat-button>Nhắn
+                                                tin <mat-icon>chat</mat-icon></button>
+                                        </mat-list>
+                                    </p-dialog>
+    
+                                </div>
+                                <div class="d-flex justify-content-around text-center py-1">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <p class="text-muted mb-1 web-font fw-bold fs-6">Địa chỉ</p>
+                                        <p [matTooltip]="store.location" class="mb-1 web-font fs-6 mt-1">{{overviewAddress}}
+                                        </p>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-1 web-font fw-bold fs-6">Đánh giá trung bình</p>
+                                        <div class="d-flex flex-row justify-content-center mt-1">
+                                            <mat-icon class="text-warning">star</mat-icon>
+                                            <mat-icon class="text-warning">star</mat-icon>
+                                            <mat-icon class="text-warning">star</mat-icon>
+                                            <mat-icon class="text-warning">star</mat-icon>
+                                            <mat-icon class="text-warning">star</mat-icon>
+                                        </div>
+    
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-1 web-font fw-bold fs-6">Số sản phẩm</p>
+                                        <div class="d-flex flex-row justify-content-center mt-1">
+                                            <p class="mb-0 mt-1 web-font fs-5"> {{storeOverviewStatistic.totalProductCount}}</p>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <p class="text-muted mb-1 web-font fw-bold fs-6">Lượt đánh giá</p>
+                                        <div class="d-flex flex-row justify-content-center mt-1">
+                                            <p class="mb-0 mt-1 web-font fs-5">{{storeOverviewStatistic.totalProductRatingCount}}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body p-4 text-black">
+                                <div class="mb-5">
+                                    <p class="lead fw-normal mb-2 web-font">Về chúng tôi</p>
+                                    <div class="p-4" style="background-color: #f8f9fa;">
+                                        <p class="font-italic mb-0 fs-5 lh-lg web-font">{{store.description}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-4" style="background-color: whitesmoke;">
+                                <h1 class="web-font fs-2 mb-4 fw-bold pastel text-center">Danh sách sản phẩm</h1>
+                                <app-list-products [itemsPerRow]="5" [listProducts]="productsList"></app-list-products>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+    
+            </div>
+        </section>
+    </div>
+</ng-container>

@@ -1,0 +1,16 @@
+.bg-img {
+    height: 64vh;
+    width: 100% !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background: url('src\assets\images\home-page-main-img.jpg');
+}
+
+.content {
+    text-align: left;
+}
+
+.sub-content-2 {
+    max-width: 70%;
+    line-height: 2;
+}

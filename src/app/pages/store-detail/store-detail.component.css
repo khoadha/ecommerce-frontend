@@ -1,0 +1,26 @@
+.gradient-custom {
+    /* background-color: rgba(255, 246, 235, 0.594); */
+}
+
+.thumbnail-image {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 360px;
+    position: relative;
+}
+
+.noCursor {
+    cursor:default ;
+}
+
+.message-button {
+    float: inline-end;
+    margin-bottom: 6%;
+}
+
+:host >>> {
+    .p-dialog .p-dialog-content {
+        padding: 0 1.5rem 0rem 1.5rem;
+    }
+}

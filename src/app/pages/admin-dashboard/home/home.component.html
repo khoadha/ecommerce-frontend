@@ -1,0 +1,350 @@
+<ng-container *ngIf="role=='Quản trị viên'">
+  <p-toast></p-toast>
+  <div class="container-fluid py-4 px-5">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="d-md-flex align-items-center mb-3 mx-2">
+          <div class="mb-md-0 mb-3">
+            <div class="d-flex">
+              <h3 class="font-weight-bold mb-0 text-dark">{{username}}</h3>
+              <a class="ms-3 mt-1">
+                <img [src]="imgPath" class="avatar avatar-sm" alt="avatar" />
+              </a>
+            </div>
+            <p class="mb-0 text-dark">{{role}}</p>
+          </div>
+          <button type="button"
+            class="btn btn-sm btn-white btn-icon d-flex align-items-center mb-0 ms-md-auto mb-sm-0 mb-2 me-2">
+            <span class="btn-inner--icon">
+              <span class="p-1 bg-success rounded-circle d-flex ms-auto me-2">
+                <span class="visually-hidden">New</span>
+              </span>
+            </span>
+            <span>Trực tuyến</span>
+          </button>
+          <a (click)="initDashboard()" mat-mini-fab class="ms-2 text-decoration-none bg-dark">
+            <mat-icon class="text-light">sync</mat-icon>
+          </a>
+          <a href="" mat-mini-fab class="ms-3 text-decoration-none bg-light">
+            <mat-icon class="text-dark">home</mat-icon>
+          </a>
+        </div>
+      </div>
+    </div>
+    <ng-container *ngIf="adi">
+      <div class="row">
+        <div class="col-3">
+          <div class="card border shadow-xs mb-4">
+            <div class="card-body text-start p-3 w-100">
+              <div
+                class="icon icon-shape icon-sm bg-success text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                <mat-icon>attach_money</mat-icon>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="w-100">
+                    <p class="text-sm text-secondary mb-1 bg">Tổng doanh thu toàn nền tảng</p>
+                    <h4 class="mb-2 font-weight-bold">{{adi.totalPlatformRevenue | vndCurrencyPipe}}</h4>
+                    <!-- <div class="d-flex align-items-center">
+                      <span class="text-sm text-success font-weight-bolder">
+                        <i class="fa fa-chevron-up text-xs me-1"></i>+10.5%
+                      </span>
+                      <span class="text-sm ms-1">từ 122.440.310 VNĐ</span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card border shadow-xs mb-4">
+            <div class="card-body text-start p-3 w-100">
+              <div
+                class="icon icon-shape icon-sm bg-primary text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                <mat-icon>backpack</mat-icon>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="w-100">
+                    <p class="text-sm text-secondary mb-1">Số sản phẩm toàn nền tảng</p>
+                    <h4 class="mb-2 font-weight-bold">{{adi.totalProductCount*2}}</h4>
+                    <!-- <div class="d-flex align-items-center">
+                      <span class="text-sm text-success font-weight-bolder">
+                        <i class="fa fa-chevron-up text-xs me-1"></i>+11.3%
+                      </span>
+                      <span class="text-sm ms-1">từ 3822</span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card border shadow-xs mb-4">
+            <div class="card-body text-start p-3 w-100">
+              <div
+                class="icon icon-shape icon-sm bg-danger text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                <mat-icon>storefront</mat-icon>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="w-100">
+                    <p class="text-sm text-secondary mb-1">Số cửa hàng toàn nền tảng</p>
+                    <!-- <h4 class="mb-2 font-weight-bold">{{adi.totalShopCoun}}</h4> -->
+                    <h4 class="mb-2 font-weight-bold">31</h4>
+                    <!-- <div class="d-flex align-items-center">
+                      <span class="text-sm text-success font-weight-bolder">
+                        <i class="fa fa-chevron-up text-xs me-1"></i>+10%
+                      </span>
+                      <span class="text-sm ms-1">từ 216</span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="card border shadow-xs mb-4">
+            <div class="card-body text-start p-3 w-100">
+              <div
+                class="icon icon-shape icon-sm bg-info text-white text-center border-radius-sm d-flex align-items-center justify-content-center mb-3">
+                <mat-icon>fact_check</mat-icon>
+              </div>
+              <div class="row">
+                <div class="col-12">
+                  <div class="w-100">
+                    <p class="text-sm text-secondary mb-1">Số đơn hàng toàn nền tảng</p>
+                    <h4 class="mb-2 font-weight-bold">{{adi.totalOrderCount}}</h4>
+                    <!-- <div class="d-flex align-items-center">
+                      <span class="text-sm text-danger font-weight-bolder">
+                        <i class="fa fa-chevron-up text-xs me-1"></i>-4.3%
+                      </span>
+                      <span class="text-sm ms-1">từ 1182</span>
+                    </div> -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-container>
+
+    <div class="row mb-5 mt-2">
+      <div class="mb-5 d-flex">
+        <div class="col-3">
+          <div class="card shadow-xs border h-100">
+            <div class="card-header pb-0">
+              <div class="d-sm-flex align-items-center mb-3">
+                <div>
+                  <h6 class="font-weight-semibold text-lg mb-0">Trạng thái đơn hàng</h6>
+                  <p class="text-sm mb-sm-0 mb-2">Biểu đồ thể hiện số lượng trạng thái của từng đơn hàng</p>
+                </div>
+              </div>
+            </div>
+            <ng-container *ngIf="orderCountStatistic">
+              <div class="card-body">
+                <app-bar-chart [data]="orderCountStatistic"></app-bar-chart>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+        <div class="col-9 ms-4">
+          <div class="card shadow-xs border h-100">
+            <div class="card-header border-bottom pb-0">
+              <div class="d-sm-flex align-items-center mb-3">
+                <div>
+                  <h6 class="fw-bold mb-0 web-font pastel">Thống kê doanh thu theo ngày trên toàn nền tảng(trong 1 tháng gần nhất)</h6>
+                </div>
+                <!-- <div class="ms-auto">
+                  <button type="button" class="btn btn-sm btn-dark btn-icon d-flex align-items-center mb-0">
+                    <mat-icon>
+                      download
+                    </mat-icon>
+                    <span class="ms-2">Tải xuống</span>
+                  </button>
+                </div> -->
+              </div>
+              <!-- <div class="pb-3 d-sm-flex align-items-center">
+                <mat-button-toggle-group appearance="standard" name="time" aria-label="Thời gian">
+                  <mat-button-toggle value="thisWeek">Trong tuần</mat-button-toggle>
+                  <mat-button-toggle value="thisMonth">Trong tháng</mat-button-toggle>
+                  <mat-button-toggle value="thisYear">Trong năm</mat-button-toggle>
+                </mat-button-toggle-group>
+              </div> -->
+            </div>
+            <ng-container *ngIf="dailyRevenue">
+              <div class="card-body py-3">
+                <app-line-chart [data]="dailyRevenue"></app-line-chart>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+      <div class="row pb-5">
+
+        <div class="col-12">
+          <div class="card shadow-xs border">
+            <div class="card-header border-bottom pb-0">
+              <div class="d-sm-flex align-items-center mb-3">
+                <div>
+                  <h6 class="font-weight-semibold text-lg mb-0">Báo cáo/Khiếu nại</h6>
+                  <p class="text-sm mb-sm-0 mb-2">Bảng này lưu lại những báo cáo/khiếu nại gần nhất</p>
+                </div>
+              </div>
+            </div>
+            <div class="card-body px-0 py-0">
+              <div class="table-responsive p-0">
+                <table class="table align-items-center justify-content-center mb-0">
+                  <thead class="bg-gray-100">
+                    <tr>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7">#</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Email</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Phân loại</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Ngày</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Lời nhắn</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Trạng thái</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Cập nhật</th>
+                      <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Gửi email</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <ng-container *ngFor="let report of reports">
+                      <tr>
+                        <td>
+                          <div class="d-flex px-2">
+                            <div class="my-auto">
+                              <h6 class="mb-0 text-sm">{{report.id}}</h6>
+                            </div>
+                          </div>
+                        </td>
+                        <td>
+                          <p class="text-sm font-weight-normal mb-0">{{report.email}}</p>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="report.reportType==0">
+                            <p class="text-sm font-weight-normal mb-0">Báo cáo</p>
+                          </ng-container>
+                          <ng-container *ngIf="report.reportType==1">
+                            <p class="text-sm font-weight-normal mb-0">Khiếu nại</p>
+                          </ng-container>
+                        </td>
+                        <td>
+                          <span class="text-sm font-weight-normal">{{report.createdDate | date:'shortDate'}}</span>
+                        </td>
+                        <td>
+                          <span class="text-sm font-weight-normal">{{report.description}}</span>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="report.isHandled; else notHandled">
+                            <span class="text-sm font-weight-normal">Đã xử lí</span>
+                          </ng-container>
+                          <ng-template #notHandled>
+                            <span class="text-sm font-weight-normal">Chưa xử lí</span>
+                          </ng-template>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="report.isHandled; else notHandled2">
+                            <button mat-icon-button disabled class="text-secondary font-weight-bold text-xs">
+                              <mat-icon>check-circle</mat-icon>
+                            </button>
+                          </ng-container>
+                          <ng-template #notHandled2>
+                            <button mat-icon-button (click)="updateReportStatus(report.id)"
+                              class="text-success font-weight-bold text-xs">
+                              <mat-icon>check-circle</mat-icon>
+                            </button>
+                          </ng-template>
+                        </td>
+                        <td>
+                          <ng-container *ngIf="report.isHandled; else notHandled3">
+                            <a class="text-secondary font-weight-bold text-xs">
+                              <mat-icon>mail</mat-icon>
+                            </a>
+                          </ng-container>
+                          <ng-template #notHandled3>
+                            <a [href]="'mailto:'+report.email" class="text-warning font-weight-bold text-xs">
+                              <mat-icon>mail</mat-icon>
+                            </a>
+                          </ng-template>
+                        </td>
+                      </tr>
+                    </ng-container>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="card shadow-xs border">
+          <div class="card-header border-bottom pb-0">
+            <div class="d-sm-flex align-items-center mb-3">
+              <div>
+                <h6 class="font-weight-semibold text-lg mb-0">Giao dịch</h6>
+                <p class="text-sm mb-sm-0 mb-2">Bảng này lưu lại những giao dịch gần nhất</p>
+              </div>
+            </div>
+          </div>
+          <div class="card-body px-0 py-0">
+            <div class="table-responsive p-0">
+              <table class="table align-items-center justify-content-center mb-0">
+                <thead class="bg-gray-100">
+                  <tr>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7">#</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Mã đơn VNPAY</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Thành tiền</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Ngày</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">ID Tài khoản</th>
+                    <th class="text-secondary text-xs font-weight-semibold opacity-7 ps-2">Phương thức</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <ng-container *ngFor="let trans of transactions">
+                    <tr>
+                      <td>
+                        <div class="d-flex px-2">
+                          <div class="my-auto">
+                            <h6 class="mb-0 text-sm">{{trans.id}}</h6>
+                          </div>
+                        </div>
+                      </td>
+                      <td>
+                        <p class="text-sm font-weight-normal mb-0">{{trans.vnPayTransactionId}}</p>
+                      </td>
+                      <td>
+                        <p class="text-sm font-weight-normal mb-0">{{trans.amount | vndCurrencyPipe}}</p>
+                      </td>
+                      <td>
+                        <span class="text-sm font-weight-normal">{{trans.createdDate | date:'short'}}</span>
+                      </td>
+                      <td>
+                        <span class="text-sm font-weight-normal">{{trans.accountId}}</span>
+                      </td>
+                      <td class="align-middle">
+                        <div class="d-flex">
+                          <div class="border px-1 py-1 text-center d-flex align-items-center border-radius-sm my-auto">
+                            <img src="https://s-vnba-cdn.aicms.vn/vnba-media/23/8/16/vnpay-logo_64dc3da9d7a11.jpg"
+                              style="width: 50px; height: auto;" alt="payment-method">
+                          </div>
+                          <div class="ms-2">
+                            <p class="text-dark text-sm mb-0">VN Pay</p>
+                            <p class="text-secondary text-sm mb-0">Banking</p>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                  </ng-container>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-container>

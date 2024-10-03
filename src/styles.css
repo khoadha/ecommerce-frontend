@@ -1,0 +1,73 @@
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.min.css";
+@import "primeicons/primeicons.css";
+
+html,
+body {
+    height: 100%;
+}
+
+.web-font {
+    font-family: 'Nunito Sans', sans-serif !important;
+}
+
+
+::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: gray;
+    border-radius: 2px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+}
+
+.mat-step-header {
+    pointer-events: none !important;
+}
+
+.pastel-bg {
+    background-color: #999b6d !important;
+}
+
+.pastel {
+    color: #999b6d !important;
+}
+
+input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+}
+
+.sub-pastel {
+    color: #b48484 !important;
+}
+
+.sub-pastel-bg {
+    background-color: #b48484 !important;
+}
+
+.bg-success-custom {
+    background-color: #69f0ae !important;
+}
+
+.side-bar-bg {
+    background-color: #0f172a !important;
+    ;
+}
+
+.spacer {
+    flex: 1 1 auto;
+}
+
+.auth-snackbar {
+    --mdc-snackbar-container-color: white;
+    --mat-snack-bar-button-color: black;
+    --mdc-snackbar-supporting-text-color: red;
+    --mdc-snackbar-supporting-text-size: 20px;
+}

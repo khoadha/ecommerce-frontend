@@ -1,0 +1,130 @@
+.gradient-custom {
+  /* fallback for old browsers */
+  background: #f6d365;
+
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-linear-linear-gradient(135deg, #999b6d, #cad0a3);
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  background: linear-gradient(135deg, #999b6d, #cad0a3);
+
+}
+
+.auth-bg-image {
+  background-image: url('src\assets\images\auth-bg-image.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  min-height: 100vh; /* Make the div take up at least the full viewport height */
+}
+
+.profile-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #ccc;
+}
+
+.pi.pi-camera {
+  /* background-color: white; */
+  border-radius: 50%;
+  padding: 5px;
+  font-size: 20px;
+  color: #fff;
+}
+
+.profile-details {
+  text-align: center;
+  margin-top: 10px;
+}
+
+.pi.pi-file-edit {
+  font-size: 20px;
+  cursor: pointer;
+}
+
+.content-item {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  margin-bottom: 1rem;
+}
+
+.content-text {
+  margin: 0;
+}
+
+.text-muted {
+  display: inline-block;
+  width: calc(100% - 1.5rem); /* Reserve space for the icon */
+}
+
+.icon {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: 1.5rem;
+  color: #6c757d;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}  
+
+::ng-deep .password-field .p-password input.p-inputtext {
+  width: 40rem;
+}
+
+.custom-dialog .p-dialog-content {
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.custom-password {
+  width: 100%;
+}
+
+.custom-button {
+  margin-right: 1rem;
+}
+
+.p-button-text.custom-button {
+  background-color: #007bff;
+  color: white;
+  border-radius: 5px;
+  border: none;
+}
+
+.p-button-text.custom-button:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.main-image-container {
+  background-color: ghostwhite; 
+  height: 400px; 
+  width: 100%; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  border: 1px gray solid
+}
+
+.img-preview {
+  max-width: 80%;
+  max-height: 390px;
+  margin: 10px auto;
+  display: block;
+}
+
+:host >>> .p-divider.p-divider-horizontal .p-divider-content {
+  background-color: whitesmoke;
+}

@@ -1,0 +1,40 @@
+.spacer {
+  flex: 1 1 auto;
+}
+
+.list-row:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+:host>>> {
+  .p-button {
+    border: none;
+  }
+
+  .p-button:focus {
+    box-shadow: none;
+  }
+
+  /* .p-inputtext:enabled:focus {
+    border-color: #ced4da;
+  }
+
+  .p-inputtext:enabled:hover {
+    border-color: #ced4da;
+  } */
+
+  .dropdown-toggle::after {
+    display: none;
+  }
+
+  .dropdown-item.active, .dropdown-item:active {
+    color: white;
+    background-color: #999b6d;
+}
+
+  .p-inputtext {
+    width: 80% !important;
+    height: 32px !important;
+  }
+}

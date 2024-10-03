@@ -1,0 +1,30 @@
+<form [formGroup]="updateProductForm" (ngSubmit)="onUpdateProduct()" class="text-center">
+    <mat-card>
+        <mat-card-header style="display:block;">
+            <mat-card-title class="text-center">
+                <p class="web-font fs-2 my-3 text-light">Update product</p>
+            </mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <div class="row mt-4">
+                <mat-form-field color="accent" appearance="fill">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Update product name here" formControlName="name">
+                    <mat-icon matSuffix>description</mat-icon>
+                    <mat-hint>Old name: {{product.name}}</mat-hint>
+                </mat-form-field>
+            </div>
+            <div class="row mt-3">
+                <mat-form-field color="accent" appearance="fill">
+                    <mat-label>Price</mat-label>
+                    <input matInput placeholder="Update product price here" formControlName="price">
+                    <mat-icon matSuffix>payments</mat-icon>
+                    <mat-hint>Old price: {{product.price}}</mat-hint>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+        <mat-card-actions class="m-auto pb-4">
+            <button mat-raised-button color="accent" [disabled]="!updateProductForm.valid">Update</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

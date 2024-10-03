@@ -1,0 +1,31 @@
+<p-toast></p-toast>
+<div class="d-flex flex-column w-100">
+    <div class="d-flex flex-column gap-2">
+        <label htmlFor="username">Email</label>
+        <input type="email" required pInputText placeholder="Nhập email của bạn tại đây" id="username" aria-describedby="username-help"
+            [(ngModel)]="email" />
+        <small id="username-help">Chúng tôi sẽ phản hồi lại với bạn qua email được cung cấp.</small>
+    </div>
+    <p-divider></p-divider>
+    <div>
+        <div class="d-flex flex-wrap gap-3">
+            <label htmlFor="report">Chọn loại đơn</label>
+            <div class="d-flex align-items-center">
+                <p-radioButton name="report" [value]="0" [(ngModel)]="reportType" inputId="report"></p-radioButton>
+                <label for="report" class="ms-2">Báo cáo</label>
+            </div>
+            <div class="d-flex align-items-center">
+                <p-radioButton name="complaint" [value]="1" [(ngModel)]="reportType"
+                    inputId="complaint"></p-radioButton>
+                <label for="complaint" class="ms-2">Khiếu nại</label>
+            </div>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <div class="d-flex flex-column gap-2">
+        <textarea rows="5" cols="30" pInputTextarea [(ngModel)]="description"></textarea>
+    </div>
+    <button (click)="onSubmitReport()" class="w-100 submit-button mt-4" mat-stroked-button>
+        Tạo đơn
+    </button>
+</div>

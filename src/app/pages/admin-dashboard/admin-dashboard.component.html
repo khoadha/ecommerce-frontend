@@ -1,0 +1,34 @@
+<mat-drawer-container class="vh-100 auth-bg-image" autosize>
+    <mat-drawer #drawer class="side-bar-bg" mode="side" opened>
+        <a href="">
+            <img class="d-flex mx-auto my-5" src="assets/images/wemade-logo-2.png" alt="Logo" width="auto" height="100">
+        </a>
+        <mat-list class="py-0">
+            <mat-list-item role="listitem" class="list-item" [ngClass]="{'active': isLinkActive(item.url!)}"
+                *ngFor="let item of items">
+                <a class="text-decoration-none d-flex flex-row align-items-center" [routerLink]="item.url">
+                    <mat-icon [ngClass]="{'icon-active': isLinkActive(item.url!)}"
+                        class="text-secondary mt-0">{{item.icon}}</mat-icon>
+                    <div [ngClass]="{'text-active': isLinkActive(item.url!)}"
+                        class="text-center web-font ps-3 text-secondary">
+                        {{item.name}}</div>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer>
+    <mat-drawer-content>
+        <ng-container>
+            <button class="my-3 ms-4 bg-dark text-white" *ngIf="!drawer.opened; else closed" type="button"
+                matTooltip="Mở menu" mat-mini-fab (click)="drawer.toggle()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+            <ng-template #closed>
+                <button class="my-3 ms-4 bg-dark text-white" type="button" matTooltip="Đóng menu" mat-mini-fab
+                    (click)="drawer.toggle()">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </ng-template>
+            <router-outlet></router-outlet>
+        </ng-container>
+    </mat-drawer-content>
+    <mat-drawer-container>

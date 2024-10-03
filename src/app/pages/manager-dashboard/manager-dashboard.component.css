@@ -1,0 +1,24 @@
+
+.active {
+    background-color: #999b6d;
+  }
+  
+  .active:hover {
+    background-color: #7f8159 !important;
+  }
+  
+  .icon-active {
+    color: white !important;
+  }
+  
+  .text-active {
+    color: white !important;
+  }
+  
+  .list-item:hover {
+    background-color: rgba(80, 80, 80, 0.2);
+  }
+  
+  .spacer {
+    flex: 1 1 auto;
+  }

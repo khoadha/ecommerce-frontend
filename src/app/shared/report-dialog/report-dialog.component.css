@@ -1,0 +1,38 @@
+.submit-button {
+    background-image: linear-gradient(to right, #649173 0%, #DBD5A4  51%, #649173  100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: flex;
+}
+
+.submit-button:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+:host >>> {
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+        background: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+        border-color: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-focus {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,30 @@
+<app-loader [loader]="maskLoading"></app-loader>
+<div class="auth-bg-image">
+  <mat-card class="rounded-2 mx-5" style="background-color: whitesmoke;">
+    <mat-card-header style="display:block;">
+      <mat-card-title class="text-center">
+        <p class="web-font fs-2 my-5 mb-4 text-dark pastel fw-bold">Mua Điểm WemadePay</p>
+      </mat-card-title>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="web-font fs-5 text-secondary fw-bolder">Điểm hiện tại của bạn: <span class="pastel">{{point}}</span></p>
+      <p-inputNumber class="w-100" placeholder="Nhập số điểm cần mua (Tối đa 10000)" [(ngModel)]="value" [useGrouping]="false"
+        [min]="1" [max]="10000"> </p-inputNumber>
+      <ng-container *ngIf="isValueValid(); else noValue">
+        <p class="web-font fs-5 my-3 text-secondary fw-bolder">Tổng thanh toán: <span
+            class="pastel">{{value*1000|vndCurrencyPipe}}</span></p>
+      </ng-container>
+      <ng-template #noValue>
+        <p class="web-font fs-5 my-3 text-secondary fw-bolder">Tổng thanh toán: <span
+            class="pastel">{{0|vndCurrencyPipe}}</span>
+        </p>
+      </ng-template>
+    </mat-card-content>
+    <mat-card-actions class="pb-4 px-3 pt-4">
+      <button (click)="onClickProcess()" class="w-100" mat-raised-button
+        [ngClass]="{'text-white bg-secondary pe-none': !isValueValid(), 'text-light pastel-bg': isValueValid()}">
+        Thanh toán
+      </button>
+    </mat-card-actions>
+  </mat-card>
+</div>

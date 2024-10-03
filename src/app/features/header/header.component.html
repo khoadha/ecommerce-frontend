@@ -1,0 +1,122 @@
+<mat-toolbar class="shadow" aria-label="Top toolbar">
+  <mat-toolbar-row class="bg-light h-auto px-3 d-flex">
+    <nav class="navbar">
+      <div class="container-fluid">
+        <a class="text-dark navbar-brand web-font" href='/'>
+          <img src="assets/images/wemade-logo.png" alt="Logo" width="auto" height="60"
+            class="d-inline-block align-text-top" />
+        </a>
+      </div>
+    </nav>
+    <div class="spacer"></div>
+    <div class="col-6">
+      <div class="p-inputgroup">
+        <input maxlength="100" [(ngModel)]="searchQuery" type="text" pInputText class="py-0"
+          placeholder="Tìm tất cả thứ gì bạn muốn..." (keyup.enter)="onSearch()" />
+        <button (click)="onSearch()" type="button" pButton class="pastel-bg py-1 px-2">
+          <mat-icon>search</mat-icon>
+        </button>
+      </div>
+    </div>
+
+    <div class="spacer"></div>
+    <ng-container *ngIf="role == undefined">
+      <div class="d-flex align-items-center">
+        <button class="ms-2 bg-light" routerLink="/instruction-page" [matTooltip]="'Hướng dẫn sử dụng nền tảng'"
+          tooltipPosition="bottom" mat-icon-button>
+          <mat-icon class="text-info">info</mat-icon>
+        </button>
+        <button mat-button class="pastel ms-3 web-font fw-bold" routerLink="/sign-in">
+          Đăng nhập
+        </button>
+        <button mat-button class="ms-3 web-font fw-bold pastel-bg text-light" routerLink="/sign-up">
+          Tạo tài khoản
+        </button>
+      </div>
+    </ng-container>
+    <ng-container *ngIf="role != undefined && profile">
+      <button class="me-2 bg-light" routerLink="/instruction-page" [matTooltip]="'Hướng dẫn sử dụng nền tảng'"
+        tooltipPosition="bottom" mat-icon-button>
+        <mat-icon class="text-info">info</mat-icon>
+      </button>
+      <button [matTooltip]="'Giỏ hàng'" tooltipPosition="bottom" *ngIf="role == 'User'" mat-icon-button
+        routerLink="/cart">
+        <mat-icon class="pastel" [matBadge]="cartSize">shopping_bag</mat-icon>
+      </button>
+      <div class="dropdown">
+        <a class="btn dropdown-toggle border-0" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <img [src]="profile.imgPath" style="width: 50px; height: 50px" class="rounded-circle"
+            referrerpolicy="no-referrer" />
+        </a>
+        <ul class="dropdown-menu">
+          <ng-container *ngIf="role == 'Admin'; else userSection">
+            <!-- <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0">Tài khoản: <span class="pastel fw-bold">{{username}}</span></p>
+            </li> -->
+            <!-- <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0"><span>Quản trị viên</span></p>
+            </li>
+            <hr class="dropdown-divider"> -->
+            <li>
+              <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="adashboard"><mat-icon
+                  class="me-2">dashboard</mat-icon> Bảng điều khiển</a>
+            </li>
+          </ng-container>
+          <ng-template #userSection>
+            <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0">
+                Tài khoản: <span class="pastel fw-bold">{{ profile.userName }}</span>
+              </p>
+            </li>
+            <li>
+              <p class="dropdown-header web-font mb-0 fs-6 py-0">
+                Điểm WemadePay: <span class="pastel fw-bold">{{ profile.wemadePoint }}</span>
+              </p>
+            </li>
+            <hr class="dropdown-divider" />
+            <li></li>
+            <li>
+              <h6 class="dropdown-header web-font pb-0">Tùy chọn</h6>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="my-order"><mat-icon
+                  class="me-2">newspaper</mat-icon> Đơn hàng của tôi</a>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center"
+                routerLink="mdashboard/store-manager"><mat-icon class="me-2">storefront</mat-icon> Kênh người bán</a>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="wemade-pay"><mat-icon
+                  class="me-2">account_balance_wallet</mat-icon>WemadePay</a>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="manage-profile"><mat-icon
+                  class="me-2">manage_accounts</mat-icon> Tài khoản của
+                tôi</a>
+            </li>
+            <li>
+              <a class="dropdown-item web-font d-flex align-items-center" routerLink="chatting"><mat-icon
+                  class="me-2">chat</mat-icon> Tin nhắn</a>
+            </li>
+          </ng-template>
+          <li style="cursor: pointer">
+            <a class="dropdown-item web-font d-flex align-items-center" (click)="logOut()"><mat-icon
+                class="me-2">logout</mat-icon> Đăng xuất</a>
+          </li>
+        </ul>
+      </div>
+    </ng-container>
+  </mat-toolbar-row>
+  <mat-toolbar-row class="pastel-bg">
+    <div class="d-flex flex-row mx-auto">
+      <a routerLink="/search" class="px-3 fs-6 web-font text-decoration-none text-light list-row">Tất cả sản phẩm</a>
+      <a routerLink="handwork" class="px-3 fs-6 web-font text-decoration-none text-light list-row">Thủ công</a>
+      <a routerLink="diy-kit" class="px-3 fs-6 web-font text-decoration-none text-light list-row">DIY Kit</a>
+      <a routerLink="/bidding" class="px-3 fs-6 web-font text-decoration-none text-light list-row">Đấu giá</a>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar>

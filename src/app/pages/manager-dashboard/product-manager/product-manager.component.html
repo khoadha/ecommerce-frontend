@@ -1,0 +1,94 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<div class="container mt-4">
+    <div class="card">
+        <p-table #dt [value]="listProducts" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+            [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+            currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} sản phẩm">
+            <ng-template pTemplate="caption">
+                <div class="flex">
+                    <button pButton label="Xóa bộ lọc" class="pastel-bg text-light  " icon="pi pi-filter-slash"
+                        (click)="clear(dt)"></button>
+                </div>
+            </ng-template>
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>
+                        <div class="flex align-items-center">
+                            #
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Tên sản phẩm
+                            <p-columnFilter type="text" field="name" display="menu"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Hình ảnh
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Đã bán
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Giá tiền
+                            <p-columnFilter type="numeric" field="price" display="menu" currency="vnd"></p-columnFilter>
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Trạng thái
+                        </div>
+                    </th>
+                    <th>
+                        <div class="flex align-items-center">
+                            Cập nhật
+                        </div>
+                    </th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-product>
+                <tr>
+                    <td>
+                        {{ product.id }}
+                    </td>
+                    <td>
+                        {{ product.name }}
+                    </td>
+                    <td>
+                        <p-image [src]="product.imgPath" [alt]="product.name" class="shadow-4" width="80" height="80"
+                            [preview]="true"></p-image>
+                    </td>
+                    <td>
+                        {{ product.numberOfSales }}
+                    </td>
+                    <td>
+                        {{ product.price|vndCurrencyPipe }}
+                    </td>
+                    <td>
+                        <ng-container *ngIf="product.isSoldOut; else available">
+                            <p-tag severity="danger" value="Hết hàng"></p-tag>
+                        </ng-container>
+                        <ng-template #available>
+                            <p-tag severity="success" value="Còn hàng"></p-tag>
+                        </ng-template>
+                    </td>
+                    <td>
+                        <button (click)="onClickEdit(product)" mat-icon-button>
+                            <mat-icon>edit</mat-icon>
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="7">Không có sản phẩm nào.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </div>
+</div>

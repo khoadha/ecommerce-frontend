@@ -1,0 +1,34 @@
+<div class="row row-cols-1 row-cols-md-4 g-4 mb-3 my-overflow mt-5">
+    <ng-container *ngFor="let bidding of listBiddings">
+        <a class="text-decoration-none" [routerLink]="'/bidding-detail/'+bidding.id">
+            <p-card>
+                <ng-template pTemplate="header">
+                    <img class="img-fluid" [src]="bidding.imageUrl" style="height: 180px;"/>
+                    <div class="d-flex align-items-center flex-column justify-content-center">
+                        <p class="web-font justify-content-center mb-0 mt-3 pastel fw-bold">Từ
+                            {{bidding.fromPrice | vndCurrencyPipe}} đến {{bidding.toPrice |
+                            vndCurrencyPipe}}</p>
+                        <small class="d-flex align-items-center text-secondary fw-bold">Bắt đầu lúc {{bidding.createdDate | date:'short'}}</small>
+                    </div>
+                </ng-template>
+                <p class="mb-0 web-font">
+                    {{bidding.note}}
+                </p>
+                <ng-template pTemplate="footer">
+                    <div class="d-flex justify-content-center">
+                        <p-tag value="Số lượng: {{bidding.quantity}}" severity="info"></p-tag>
+                        <ng-container [ngSwitch]="bidding.isDone">
+                            <ng-container *ngSwitchCase="false">
+                                <p-tag severity="warning" value="Đang diễn ra" class="ms-2"></p-tag>
+                            </ng-container>
+                            <ng-container *ngSwitchCase="true">
+                                <p-tag severity="success" value="Đã kết thúc" class="ms-2"></p-tag>
+                            </ng-container>
+                        </ng-container>
+                    </div>
+                    
+                </ng-template>
+            </p-card>
+        </a>
+    </ng-container>
+</div>

@@ -1,0 +1,38 @@
+<mat-drawer-container class="vh-100" style="background-color: #999b6d68;" autosize>
+    <mat-drawer style="width: 16%;" #drawer class="bg-light" mode="side" opened>
+        <a href="">
+        <img class="d-flex mx-auto my-5" src="assets/images/wemade-logo-2.png" alt="Logo" width="auto" height="100">
+        </a>
+        <mat-list class="py-0">
+            <mat-list-item role="listitem" class="list-item" [ngClass]="{'active': isLinkActive(item.url!)}"
+                *ngFor="let item of items">
+                <a class="text-decoration-none d-flex flex-row align-items-center" [routerLink]="item.url">
+                    <mat-icon [ngClass]="{'icon-active': isLinkActive(item.url!)}"
+                        class="text-secondary mt-0">{{item.icon}}</mat-icon>
+                    <div [ngClass]="{'text-active': isLinkActive(item.url!)}" class="text-center web-font ps-3 text-secondary">
+                        {{item.name}}</div>
+                </a>
+            </mat-list-item>
+        </mat-list>
+    </mat-drawer> 
+    <mat-drawer-content>
+        <mat-toolbar>
+            <button class="my-3 ms-2 bg-white text-dark" *ngIf="!drawer.opened; else closed" type="button"
+                matTooltip="Open menu" mat-mini-fab (click)="drawer.toggle()">
+                <mat-icon>chevron_right</mat-icon>
+            </button>
+            <ng-template #closed>
+                <button class="my-3 ms-2 bg-white text-dark" type="button" matTooltip="Close menu" mat-mini-fab
+                    (click)="drawer.toggle()">
+                    <mat-icon>chevron_left</mat-icon>
+                </button>
+            </ng-template>
+            <div class="spacer"></div>
+            <a href="" mat-icon-button>
+                <mat-icon>home</mat-icon>
+            </a>
+        </mat-toolbar>
+        <router-outlet></router-outlet>
+    </mat-drawer-content>
+    <mat-drawer-content>
+        

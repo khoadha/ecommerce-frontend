@@ -1,0 +1,54 @@
+:host >>> {
+    .p-multiselect {
+        width: 100%;
+    }
+
+    .p-inputnumber {
+        width: 100%;
+    }
+
+    .p-fileupload .p-fileupload-buttonbar .p-button {
+        background-color: #999b6d !important;
+        border: none;
+    }
+
+    .p-fileupload .p-fileupload-buttonbar .p-button:hover {
+        background-color: #7f8159 !important;
+    }
+    
+
+    .p-button.p-button-icon-only {
+        background-color: #999b6d !important;
+        border: none;
+    }
+
+    .p-button.p-button-icon-only:hover {
+        background-color: #7f8159 !important;
+    }
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-multiselect:not(.p-disabled).p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-multiselect:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+        box-shadow: none;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+} 

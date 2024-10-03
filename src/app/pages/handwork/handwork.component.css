@@ -1,0 +1,138 @@
+.list-decoration {
+    list-style: none;
+}
+
+.custom-height {
+    height: 120vh !important;
+}
+
+.custom-height-2 {
+    height: auto;
+}
+
+.custom-container-height{
+  min-height: 100vh;
+}
+
+:host >>> .ui-multiselect-label {
+    visibility: collapse;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+:host >>> .p-divider.p-divider-horizontal .p-divider-content {
+    background-color: ghostwhite;
+}
+
+.search-title {
+    max-width: 60%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Consolas';
+}
+
+
+:host >>> {
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-dropdown:not(.p-disabled).p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-dropdown:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-focus {
+        border-color: #999b6d;
+    }
+
+    .p-inputtext:enabled:hover {
+        border-color: #ced4da;
+    }
+
+    .p-inputtext:enabled:focus {
+        border-color: #ced4da;
+    }
+
+    .p-multiselect:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-multiselect:not(.p-disabled).p-focus {
+        border-color: #ced4da;
+        box-shadow: none;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+        box-shadow: none !important;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus {
+        box-shadow: none;
+    }
+
+    .p-multiselect-panel .p-multiselect-header .p-multiselect-close {
+        display: none;
+    }
+    
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: #999b6d;
+    }
+
+    .p-divider-horizontal.p-divider-center {
+        margin-top: 0px;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+        background: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+        border-color: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-radiobutton .p-radiobutton-box.p-focus {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+        box-shadow: none;
+    }
+} 
+
+
+

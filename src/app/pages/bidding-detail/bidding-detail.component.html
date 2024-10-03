@@ -1,0 +1,163 @@
+<app-loader [loader]="maskLoading"></app-loader>
+<p-toast></p-toast>
+<ng-container *ngIf="bidding">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    <div class="container mt-4" style="max-width: 1300px;">
+        <div class="row mt-5 col-12">
+            <div class="col-4 padding-0 mx-4">
+                <div class="main-image-container">
+                    <img [src]="bidding.imageUrl" class="img-fluid" style="max-width: 100%; max-height: 100%;">
+                </div>
+            </div>
+            <div class="col-7 padding-0 mx-4">
+                <div class="d-flex flex-row gap-3 align-items-baseline">
+                    <div>
+                        <h1 class="web-font text-secondary fs-2 mb-4 fw-bold">Chi tiết yêu cầu (Mã #{{bidding.id}})</h1>
+                    </div>
+                </div>
+                <div class="d-flex flex-row gap-5">
+                    <div class="d-flex flex-column col-4">
+                        <div class="text-secondary web-font fs-4 mb-3">Ngày khởi tạo:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Ngày hoàn tất:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Giá tiền mong muốn:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Số lượng:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Kích thước:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Danh mục:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Chất liệu:</div>
+                        <div class="text-secondary web-font fs-4 mb-3">Ghi chú:</div>
+                    </div>
+                    <div class="d-flex flex-column col-8">
+                        <div class="pastel web-font fs-4 mb-3">{{bidding.createdDate | date:'short'}}</div>
+                        <div class="pastel web-font fs-4 mb-3">{{bidding.completedDate | date:'short'}}</div>
+                        <div class="pastel web-font fs-4 mb-3">Từ &nbsp; {{bidding.fromPrice |
+                            vndCurrencyPipe }} &nbsp;đến&nbsp;
+                            {{bidding.toPrice | vndCurrencyPipe}}
+                        </div>
+                        <div class="pastel web-font fs-4 mb-3">{{bidding.quantity}}</div>
+                        <div class="pastel web-font fs-4 mb-3">{{bidding.size}} ({{bidding.unitOfMeasure}})</div>
+                        <div class="pastel web-font fs-4 mb-3">
+                            <ng-container *ngFor="let category of bidding.biddingCategories">
+                                <a style="pointer-events: none;">
+                                    <p-chip>
+                                        <div class="fs-6 p-2 web-font fw-bold text-light">
+                                            <span style="font-size: 14px;">{{category}}</span>
+                                        </div>
+                                    </p-chip>
+                                </a>
+                            </ng-container>
+                        </div>
+                        <div class="pastel web-font fs-4 mb-3">
+                            <ng-container *ngFor="let material of bidding.biddingMaterials">
+                                <a style="pointer-events: none;">
+                                    <p-chip>
+                                        <div class="fs-6 p-2 web-font fw-bold text-light">
+                                            <span style="font-size: 14px;">{{material}}</span>
+                                        </div>
+                                    </p-chip>
+                                </a>
+                            </ng-container>
+                        </div>
+                        <div class="pastel web-font fs-5 mb-2">{{bidding.note}}</div>
+                    </div>
+                </div>
+                <div>
+                    <ng-container *ngIf="!isBiddingOwner">
+                        <button (click)="onClickAuctioneer()" class="mt-4 text-light w-100 create-bid-button" mat-fab
+                        extended>
+                        <mat-icon>post_add</mat-icon>
+                        Ra giá của cửa hàng tại đây
+                    </button>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="row py-2 my-5" style="background-color: ghostwhite;">
+        <ng-container *ngIf="bidList.length>0; else noBidData">
+                <p-carousel [showIndicators]="false" [value]="bidList" [numVisible]="4" [numScroll]="1" [circular]="false">
+                    <ng-template let-bid pTemplate="item">
+                        <div class="card my-5 mx-1">
+                            <div class="card-header pastel-bg">
+                                <div class="d-flex flex-row">
+                                    <img width="60" height="60" class="rounded-circle my-1 ms-1"
+                                        [src]="bid.storeImgPath">
+                                    <div class="d-flex flex-column ms-3">
+                                        <div class="web-font text-light fw-bold">{{bid.storeName}}</div>
+                                        <div class="d-flex flex-row">
+                                            <mat-icon class="text-warning">star_rate</mat-icon>
+                                            <mat-icon class="text-warning">star_rate</mat-icon>
+                                            <mat-icon class="text-warning">star_rate</mat-icon>
+                                            <mat-icon class="text-warning">star_rate</mat-icon>
+                                            <mat-icon class="text-warning">star_rate</mat-icon>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex flex-column">
+                                    <div class="web-font text-secondary fw-bold">Giá: {{bid.price | vndCurrencyPipe}}
+                                    </div>
+                                    <div class="web-font text-secondary fw-bold">Thời gian hoàn thành: {{bid.completedTime |
+                                        date: "shortDate"}}</div>
+                                    <div class="web-font text-danger fw-bold text-center mt-2">Mức độ hoàn thành<p-progressBar
+                                            [value]="bid.percentOfComplete"></p-progressBar></div>
+                                    <div class="d-flex flex-row px-auto my-3">
+                                        <div *ngFor="let image of bid.listImages">
+                                            <div class="mx-1">
+                                                <p-image class="rounded" [src]="image" width="60" height="60"
+                                                    [preview]="true"></p-image>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ng-container *ngIf="isBiddingOwner">
+                                        <button mat-raised-button class="pastel-bg text-light">ĐẶT HÀNG</button>
+                                    </ng-container>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-carousel>
+            </ng-container>
+            <ng-template #noBidData>
+                <div class="d-flex justify-content-center flex-column align-items-center">
+                    <img style="width: 30%; height: auto;" src="assets/images/no-product-found.png">
+                    <div class="pastel web-font fs-4 mb-4">Hiện chưa có gói thầu cho yêu cầu này!</div>
+                </div>
+            </ng-template>
+        </div>
+    </div>
+</ng-container>
+
+<p-dialog [(visible)]="biddingDialog" header="Tạo yêu cầu đấu thầu"
+    [modal]="true" styleClass="p-fluid">
+    <form [formGroup]="addAuctioneerForm" (ngSubmit)="onAddAuctioneer()" class="col-12" enctype="multipart/form-data">
+        <div class="d-flex flex-column gap-2 mt-4">
+            <div class="calendar-container">
+                <span class="fw-bold web-font d-block mb-1 fs-5">Ngày dự kiến hoàn thành</span>
+                <p-calendar placeholder="Chọn ngày dự kiến hoàn thành" [minDate]="minDate"
+                    formControlName="completedDate"></p-calendar>
+            </div>
+        </div>
+        <div class="d-flex flex-column gap-2 mt-4">
+            <span class="fw-bold web-font d-block mb-1 fs-5">Giá đấu thầu</span>
+            <p-inputNumber mode="currency" currency="vnd" locale="en-vn"
+                placeholder="₫ Nhập giá sản phẩm tại đây (Giá sản phẩm phải nằm trong khoảng yêu cầu của đấu giá)"
+                formControlName="price"></p-inputNumber>
+        </div>
+        <div class="d-flex flex-column gap-2 mt-4">
+            <span class="fw-bold web-font d-block mb-1 fs-5">Phần trăm hoàn thiện (Nhập hoặc kéo để chọn)</span>
+            <p-inputNumber placeholder="Nhập hoặc kéo thả để chọn phần trăm hoàn thiện sẩn phẩm"
+                [(ngModel)]="percentValue" [min]="0" [max]="100" [ngModelOptions]="{standalone: true}"></p-inputNumber>
+            <p-slider [(ngModel)]="percentValue" class="w-full mt-2" [ngModelOptions]="{standalone: true}"></p-slider>
+        </div>
+        <div class="card mt-4 d-flex justify-content-center">
+            <p-fileUpload chooseLabel="Thêm hình ảnh đấu thầu" cancelLabel="Xóa tất cả" #uploadedFiles
+                [showUploadButton]="false" [multiple]="true" accept="image/*"></p-fileUpload>
+        </div>
+    </form>
+    <ng-template pTemplate="footer">
+        <button pButton pRipple label="Quay lại" class="p-button-text text-danger"
+            (click)="hideBiddingDialog()"></button>
+        <button pButton pRipple label="Ra giá ngay" icon="pi pi-check" class="p-button-text pastel-bg text-light"
+            (click)="onAddAuctioneer()"></button>
+    </ng-template>
+</p-dialog>

@@ -1,0 +1,36 @@
+<ul #chatBox class="chat-box chatContainerScroll max-height-message" style="height: 120vh; padding-right: 12px;">
+  <ng-container *ngFor="let message of messages">
+    <ng-container *ngIf="message.from === currentUser; else otherUserMessage">
+      <!-- Message from current user -->
+      <li class="chat-right">
+        <div class="chat-hour">
+          {{ message.time | date: 'HH:mm' }}
+          <span class="fa fa-check-circle"></span>
+        </div>
+        <div class="chat-text">
+          {{ message.content }}
+        </div>
+        <div class="chat-avatar">
+          <img src={{myAva}} alt="Retail Admin" />
+          <!-- <div class="chat-name">{{ myName }}</div> -->
+        </div>
+      </li>
+    </ng-container>
+    <ng-template #otherUserMessage>
+      <!-- Message from other users -->
+      <li class="chat-left">
+        <div class="chat-avatar">
+          <img src={{toImg}} alt="Retail Admin" />
+          <!-- <div class="chat-name">{{ toName }}</div> -->
+        </div>
+        <div class="chat-text-normal" style="word-break: break-word;">
+          {{ message.content }}
+        </div>
+        <div class="chat-hour">
+          {{ message.time | date: 'HH:mm' }}
+          <span class="fa fa-check-circle"></span>
+        </div>
+      </li>
+    </ng-template>
+  </ng-container>
+</ul>

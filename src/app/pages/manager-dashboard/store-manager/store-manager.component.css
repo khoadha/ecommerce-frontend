@@ -1,0 +1,42 @@
+table {
+  width: 100%;
+}
+
+tr.example-detail-row {
+  height: 0;
+}
+
+tr.example-element-row:not(.example-expanded-row):hover {
+  background: gray;
+}
+
+.example-element-row td {
+  border-bottom-width: 0;
+}
+
+.example-element-detail {
+  overflow: hidden;
+  display: flex;
+}
+
+.thumbnail-img {
+  height: 220px;
+}
+
+.noHover{
+  pointer-events: none;
+}
+
+.main-image-container {
+  background-color: ghostwhite; 
+  height: 400px; 
+  width: 60%; 
+  padding: 0 10px;
+  display: flex; 
+  align-items: center; 
+  justify-content: center;
+  border: 1px gray solid
+}
+
+
+

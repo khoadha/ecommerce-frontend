@@ -1,0 +1,41 @@
+.coupon {
+    padding: 0;
+    width: 19%;
+    margin-right: auto;
+    border: 2px solid rgb(210, 210, 210)
+}
+
+.detail-container {
+
+    p,
+    h3,
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 120px;
+    }
+}
+
+:host>>> {
+
+    .mat-mdc-progress-spinner {
+        --mdc-circular-progress-active-indicator-color: #999b6d;
+    }
+
+    .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+        background-color: #999b6d !important;
+    }
+
+    .p-link:focus {
+        box-shadow: none;
+    }
+
+    .p-carousel .p-carousel-content .p-carousel-prev:focus {
+        box-shadow: none;
+    }
+
+    .p-carousel .p-carousel-content .p-carousel-next:focus {
+        box-shadow: none;
+    }
+}

@@ -1,0 +1,17 @@
+.create-bid-button {
+    background-image: linear-gradient(to right, #649173 0%, #DBD5A4 51%, #649173 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: flex;
+}
+
+.create-bid-button:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}

@@ -1,0 +1,105 @@
+<app-loader [loader]="loading"></app-loader>
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<div class="container mt-4" style="max-width: 1200px; min-height: 80vh;">
+    <div class="row mt-5 col-12">
+        <div class="col-4 padding-0 mx-4">
+            <div class="d-flex flex-column">
+                <div style="height: auto; width: 100%;">
+                    <div class="main-image-container">
+                        <ng-container *ngIf="currentSrc.length>10 && currentSrc; else notCurrentSrc">
+                            <img [src]="currentSrc" alt="Ảnh mẫu" class="img-preview"
+                                style="max-width: 100%; max-height: 100%;">
+                        </ng-container>
+                        <ng-template #notCurrentSrc>
+                            <img *ngIf="isImageSelected; else noImgSelected" [src]="getImagePreviewUrl()"
+                                alt="Ảnh mẫu" class="img-preview" style="max-width: 100%; max-height: 100%;">
+                        </ng-template>
+                    </div>
+                    <ng-template #noImgSelected>
+                        <img src="https://blobcuakhoa.blob.core.windows.net/files/no-img.jpg" alt="Ảnh mẫu"
+                            class="img-preview w-100 h-100">
+                    </ng-template>
+                </div>
+                <div class="image-button-container">
+                    <button (click)="fileInput.click()" mat-stroked-button class="w-50 h-100 border-dark">
+                        <div class="web-font d-flex align-items-center fw-bold">Tải lên ảnh<mat-icon class="ms-1">upload_file</mat-icon></div>
+                    </button>
+                    <button (click)="openARDialog()" mat-stroked-button
+                        class="w-50 h-100 bg-warning text-dark border-dark">
+                        <div class="web-font d-flex align-items-center fw-bold">Tìm kiếm ảnh<mat-icon class="ms-1">image_search</mat-icon>
+                        </div>
+                    </button>
+                </div>
+                <div class="image-button-container">
+                    <button mat-stroked-button (click)="submit.click()"
+                        class="w-100 h-100 pastel-bg text-white border-dark">
+                        <div class="web-font fw-bold d-flex align-items-center">Tạo yêu cầu</div>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="col-7">
+            <form [formGroup]="createBiddingForm" (ngSubmit)="onCreateBidding()" enctype="multipart/form-data">
+                <h1 class="web-font text-secondary fs-2">THÔNG TIN SẢN PHẨM</h1>
+                <div class="d-flex flex-column mb-5">
+                    <h3 class="web-font fs-4 my-3">Phân loại:</h3>
+                    <div class="d-flex flex-column ms-5 gap-3">
+                        <div class="d-flex flex-row gap-4 align-items-center">
+                            <h6 class="web-font fs-6" style="min-width: 14%">Loại hàng</h6>
+                            <p-multiSelect [baseZIndex]="10" placeholder="Chọn danh mục &nbsp;&nbsp;"
+                                [options]="categories" optionValue="id" formControlName="selectedCategories"
+                                optionLabel="name" [maxSelectedLabels]="0"></p-multiSelect>
+                        </div>
+                        <div class="d-flex flex-row gap-4 align-items-center">
+                            <h6 class="web-font fs-6" style="min-width: 14%">Chất liệu</h6>
+                            <p-multiSelect optionValue="id" placeholder="Chọn chất liệu &nbsp;&nbsp;&nbsp;&nbsp;"
+                                [options]="materials" formControlName="selectedMaterials" optionLabel="name"
+                                [maxSelectedLabels]="0"></p-multiSelect>
+                        </div>
+                        <div class="d-flex flex-row gap-4 align-items-center">
+                            <h6 class="web-font fs-6" style="min-width: 14%">Kích thước</h6>
+                            <p-inputNumber mode="decimal" [useGrouping]="false" class="p-inputtext-sm"
+                                placeholder="Nhập kích thước" formControlName="size" inputId="size"></p-inputNumber>
+                            <p-dropdown placeholder="Đơn vị đo" [options]="unitOfMeasure"
+                                formControlName="unitOfMeasure" optionValue="key" optionLabel="name"></p-dropdown>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row gap-4 align-items-center mt-4 increase-decrease-btn-container">
+                        <h3 class="web-font fs-4" style="align-self: flex-start; min-width: 18%">Số lượng:</h3>
+                        <p-inputNumber [min]="1" [max]="99" formControlName="quantity" [showButtons]="true"
+                            buttonLayout="horizontal" [step]="1" decrementButtonClass="pastel-bg"
+                            incrementButtonClass="pastel-bg" incrementButtonIcon="pi pi-plus"
+                            decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                    </div>
+                    <div class="d-flex flex-row gap-4 align-items-center mt-4">
+                        <h3 class="web-font fs-4" style="align-self: flex-start; min-width: 18%">Mức giá:</h3>
+                        <div class="d-flex w-100 flex-row align-items-center gap-2">
+                            <p-inputNumber class="p-inputtext-sm" placeholder="₫ Từ" formControlName="fromPrice"
+                                inputId="fromPrice" locale="en-vn"></p-inputNumber>
+                            <mat-icon class="my-1">arrow_forward</mat-icon>
+                            <p-inputNumber class="p-inputtext-sm" placeholder="₫ Đến" formControlName="toPrice"
+                                inputId="toPrice" locale="en-vn"></p-inputNumber>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row gap-4 align-items-center mt-4">
+                        <h3 class="web-font fs-4" style="align-self: flex-start; min-width: 18%">Thời gian:</h3>
+                        <div class="calendar-container">
+                            <p-calendar placeholder="Chọn ngày hoàn thành" [minDate]="minDate"
+                                formControlName="completedDate"></p-calendar>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row gap-4 align-items-center mt-4">
+                        <h3 class="web-font fs-4" style="align-self: flex-start; min-width: 18%">Ghi chú:</h3>
+                        <textarea [autoResize]="true" placeholder="Điền ghi chú (nếu có)" maxlength="500" pInputTextarea
+                            formControlName="note"></textarea>
+                    </div>
+                </div>
+                <button hidden #submit></button>
+            </form>
+        </div>
+    </div>
+
+    <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event, 'image')" hidden>
+
+    
+</div>

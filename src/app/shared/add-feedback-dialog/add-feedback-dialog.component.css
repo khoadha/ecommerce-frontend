@@ -1,0 +1,75 @@
+:host >>> {
+    .p-multiselect {
+        width: 100%;
+    }
+
+    .p-inputnumber {
+        width: 100%;
+    }
+
+    .p-fileupload .p-fileupload-buttonbar .p-button {
+        background-color: #999b6d !important;
+        border: none;
+    }
+
+    .p-fileupload .p-fileupload-buttonbar .p-button:hover {
+        background-color: #7f8159 !important;
+    }
+    
+
+    .p-button.p-button-icon-only {
+        background-color: #999b6d !important;
+        border: none;
+    }
+
+    .p-button.p-button-icon-only:hover {
+        background-color: #7f8159 !important;
+    }
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-multiselect:not(.p-disabled).p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-multiselect:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+        box-shadow: none;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight:focus {
+        border: none;
+        box-shadow: none;
+    }
+
+    .p-rating .p-rating-icon.p-rating-icon-active {
+        color: #ffc107 !important;
+    }
+}
+
+.submit-button {
+    background-image: linear-gradient(to right, #649173 0%, #DBD5A4  51%, #649173  100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: flex;
+}
+
+.submit-button:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}

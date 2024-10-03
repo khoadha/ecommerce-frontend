@@ -1,0 +1,58 @@
+.auth-bg-image {
+  background-color: #999b6d4d;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center;
+  /* Horizontally center content */
+  align-items: center;
+  /* Vertically center content */
+  min-height: 100vh;
+  /* Make the div take up at least the full viewport height */
+}
+
+.store-img {
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+}
+
+:host>>> {
+  .p-fieldset .p-fieldset-content {
+    padding: 0 !important;
+  }
+
+  .p-fieldset .p-fieldset-legend {
+    padding: 0 !important;
+    margin-bottom: 0;
+  }
+
+  .p-fieldset {
+    width: 100%;
+  }
+
+  .mat-vertical-content {
+    padding: 0 !important;
+  }
+
+
+  .p-radiobutton .p-radiobutton-box.p-highlight {
+    background: #999b6d !important;
+}
+
+.p-radiobutton .p-radiobutton-box:not(.p-disabled):not(.p-highlight):hover {
+    border-color: #999b6d !important;
+}
+
+.p-radiobutton .p-radiobutton-box.p-highlight {
+    border-color: #999b6d !important;
+    background: #999b6d !important;
+}
+
+.p-radiobutton .p-radiobutton-box.p-focus {
+    border-color: #999b6d !important;
+    background: #999b6d !important;
+    box-shadow: none;
+}
+}

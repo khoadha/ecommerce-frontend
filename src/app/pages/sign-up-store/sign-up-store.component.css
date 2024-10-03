@@ -1,0 +1,38 @@
+.auth-bg-image {
+    /* background-image: url('src\assets\images\auth-bg-image.jpg'); */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #ccce9ba2;
+}
+
+
+.img-preview {
+    width: 50%;
+    height: auto;
+    margin: 10px auto;
+    display: block;
+}
+
+.mdc-text-field--filled{
+    background-color: #000000 !important;
+}
+
+:host >>> {
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+        border-color: #999b6d;
+    }
+
+    .p-divider.p-divider-horizontal .p-divider-content {
+        background-color: whitesmoke !important;
+    }
+}

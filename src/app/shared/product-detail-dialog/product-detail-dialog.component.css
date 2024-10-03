@@ -1,0 +1,10 @@
+:host >>> {
+    .p-inputswitch:hover {
+        /* background: #999b6d; */
+    }
+
+    .p-inputswitch.p-inputswitch-checked .p-inputswitch-slider {
+        background: #999b6d;
+    }
+
+}

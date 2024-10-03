@@ -1,0 +1,64 @@
+<div class="vh-100">
+    <div class="container d-flex gap-5">
+        <div class="col-md-12">
+            <ng-container *ngIf="listCustomers">
+                <p-table
+                #dt
+                [columns]="cols"
+                [value]="listCustomers"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [loading]="loading"
+                [paginator]="true"
+                [tableStyle]="{ 'min-width': '75%' }"
+                [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} danh mục"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <h1 class="m-0 mb-2 web-font pastel text-center fw-bold">Danh sách tài khoản</h1>
+                    <div class="flex">
+                        <div>
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input 
+                                    pInputText 
+                                    type="text" 
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')" 
+                                    placeholder="Tìm kiếm..." />
+                            </span>
+                        </div>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            <p-columnFilter type="text" [field]="col.field" [matchModeOptions]="matchModeOptions" [matchMode]="'custom-equals'"></p-columnFilter>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-listCustomers>
+                    <tr>
+                        <td>{{ listCustomers.id }}</td>
+                        <td>{{ listCustomers.userName }}</td>
+                        <td>
+                            <p-image [src]="listCustomers.imgPath" [alt]="listCustomers.name" class="shadow-4" width="80" height="80"
+                                [preview]="true"></p-image>
+                        </td>
+                        <td>{{ listCustomers.email }}</td>
+                        <td>{{ listCustomers.phoneNumber }}</td>
+                        <td>{{ listCustomers.roleName }}</td>
+                        <td>{{ listCustomers.lastLoginTime|date:'short' }}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </ng-container>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <p-divider></p-divider>
+</div>

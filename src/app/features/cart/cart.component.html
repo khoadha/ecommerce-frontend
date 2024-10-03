@@ -1,0 +1,92 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<app-loader [loader]="isLoading"></app-loader>
+<div class="auth-bg-image">
+    <div class="container py-5" style="max-width: 1200px;">
+        <ng-container *ngIf="cartItems">
+            <ng-container *ngIf="cartItems.length==0; else cartTable">
+                <div class="row">
+                    <div class="col-3"></div>
+                    <div class="col-6">
+                        <img class="w-100" src="assets/images/cart-empty-img.png" alt="Cart empty image">
+                        <h1 class="text-center text-dark empty-cart-msg web-font">Giỏ hàng của bạn đang trống, hãy tìm
+                            kiếm gì đó!</h1>
+                    </div>
+                    <div class="col-3"></div>
+                </div>
+            </ng-container>
+            <ng-template #cartTable>
+                <p-table class="w-100" [value]="cartItems" [selectionMode]="'multiple'" [(selection)]="selectedItems" dataKey="id">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 5%">
+                                <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                            </th>
+                            <th style="width: 15%">Cửa hàng</th>
+                            <th style="width: 35%">Sản phẩm</th>
+                            <th style="width: 10%">Hình ảnh</th>
+                            <th style="width: 10%">Giá tiền</th>
+                            <th style="width: 15%">Số lượng</th>
+                            <th style="width: 5%">Thanh toán</th>
+                            <th></th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item>
+                        <tr>
+                            <td>
+                                <p-tableCheckbox [value]="item"></p-tableCheckbox>
+                            </td>
+                            <td>
+                             <a class="text-decoration-none pastel" routerLink="/store-detail/{{item.product.storeId}}" target="_blank">
+                                {{item.product.storeName}}
+                            </a>
+                            </td>
+                                <td>
+                                    <a class="text-decoration-none pastel" routerLink="/product-detail/{{item.product.id}}" target="_blank">
+                                        {{item.product.name}}
+                                    </a>
+                                </td>
+                            <td><img [src]="item.product.imgPath" style="width: 80px; height: 80px;"></td>
+                            <td>{{item.product.price|vndCurrencyPipe}}</td>
+                            <td>
+                                <div class="d-flex flex-row align-items-center">
+                                    <button class="quantity-buttons" [disabled]="selectedItems.length>0" (click)="decreaseQuantity(item.id, item.quantity)" mat-icon-button
+                                        color="warn" aria-label="Decrease 1 quantity" [disabled]="item.quantity === 1">
+                                        <mat-icon>remove</mat-icon>
+                                    </button>
+                                    <span class="pt-2">{{item.quantity}}</span>
+                                    <button class="quantity-buttons" [disabled]="selectedItems.length>0" (click)="increaseQuantity(item.id)" mat-icon-button color="warn"
+                                        aria-label="Increase 1 quantity">
+                                        <mat-icon>add</mat-icon>
+                                    </button>
+                                </div>
+                            </td>
+                            <td>{{item.cost|vndCurrencyPipe}}</td>
+                            <td>
+                                <ng-container *ngIf="selectedItems.length>0; else active">
+                                    <button class="quantity-buttons" [disabled]="selectedItems.length>0" (click)="onRemoveFromCart(item.id, item.product.name)" mat-icon-button
+                                        ><mat-icon>close</mat-icon></button>
+                                </ng-container>
+                                <ng-template #active>
+                                    <button class="quantity-buttons" [disabled]="selectedItems.length>0" (click)="onRemoveFromCart(item.id, item.product.name)" mat-icon-button
+                                        class="text-danger"><mat-icon>close</mat-icon></button>
+                                </ng-template>
+                                    
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="footer">
+                        <tr>
+                            <td colspan="3" class="text-right"></td>
+                            <td colspan="2">Tổng thanh toán</td>
+                            <td>{{getTotalCost() | vndCurrencyPipe}}</td>
+                            <td colspan="2"><button style="font-size: 10px;" [ngClass]="{'disabled-button': isEmptySelectedItems()}" [disabled]="isEmptySelectedItems()" mat-raised-button (click)="onPurchase()" class="pastel-bg text-white">
+                                Thanh toán
+                                <mat-icon>shopping_cart_checkout</mat-icon>
+                            </button></td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </ng-template>
+        </ng-container>
+    </div>
+</div>

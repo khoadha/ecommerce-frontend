@@ -1,0 +1,148 @@
+.thumbnail-img {
+    height: 240px;
+}
+
+.storeHover {
+    border: 1px solid transparent;
+}
+
+.storeHover:hover {
+    border: 1px solid #999b6d;
+}
+
+.scrolling-wrapper {
+    overflow-x: scroll;
+    overflow-y: hidden;
+    white-space: nowrap;
+}
+
+
+.card-title {
+    max-width: 190px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Consolas';
+}
+
+.load-wraper {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    background: rgb(227, 227, 227);
+    background: linear-gradient(90deg, rgba(227, 227, 227, 1) 0%, rgba(182, 182, 182, 1) 7%, rgba(182, 182, 182, 1) 13%, rgba(227, 227, 227, 1) 25%);
+    background-size: 900%;
+    background-position: 100% 0%;
+    z-index: 44;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.ph-card {
+    margin: 20px;
+    height: 260px;
+    position: relative;
+    float: left;
+}
+
+.ph-card-image {
+    height: 200px;
+    width: 100%;
+    position: relative;
+}
+
+.ph-card-content {
+    margin-top: 20px;
+    min-height: 40px;
+    display: flex;
+}
+
+.ph-card-avatar {
+    width: 40px;
+    float: left;
+    flex: none;
+}
+
+.ph-card-avatar-text {
+    margin-left: 20px;
+    float: left;
+}
+
+.ph-card-content,
+.ph-card-text,
+.ph-card-avatar,
+.ph-card-avatar-text {
+    height: 40px;
+    position: relative;
+}
+
+.ph-card-content,
+.ph-card-text,
+.ph-card-avatar-text {
+    width: 100%;
+}
+
+.circular {
+    border-radius: 50%;
+}
+
+.activity {
+    position: absolute;
+    left: -45%;
+    height: 100%;
+    width: 45%;
+    background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+    animation: loading 1s infinite;
+    z-index: 45;
+}
+
+@keyframes loading {
+    0% {
+        left: -45%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes left-right {
+    0% {
+        left: -30%;
+    }
+
+    50% {
+        left: 100%
+    }
+
+    100% {
+        left: -45%;
+    }
+}
+
+.store-card {
+    background-color: white;
+}
+
+
+:host >>> {
+    .p-carousel .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+           background-color: #999b6d !important;
+    }
+
+    .p-link:focus {
+        box-shadow: none;
+    }
+
+    .p-carousel .p-carousel-content .p-carousel-prev:focus {
+        box-shadow: none;
+    }
+
+    .p-carousel .p-carousel-content .p-carousel-next:focus {
+        box-shadow: none;
+    }
+}
+
+

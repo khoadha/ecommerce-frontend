@@ -1,0 +1,204 @@
+<div class="auth-bg-image">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="d-flex flex-column gap-3 align-items-center">
+                <img src="assets/images/wemade-logo-pic.png" alt="Logo" width="80" height="auto">
+                <h1 class="text-center fs-2 text-dark fw-bold mb-5 web-font pastel">Đăng ký trở thành người bán Wemade
+                </h1>
+            </div>
+            <mat-stepper class="mb-5" color="accent" #stepper [linear]="false" [animationDuration]="duration.value">
+                <form [formGroup]="storeInformationForm" class="mt-5">
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div class="d-flex flex-row align-items-center">
+                                Thông tin cơ bản <mat-icon class="ms-1 pastel">storefront</mat-icon>
+                            </div>
+                        </ng-template>
+                        <div class="d-flex flex-column w-100 align-items-center my-4">
+                            <mat-form-field class="w-50 mt-3" color="accent" appearance="fill">
+                                <mat-label>Tên cửa hàng</mat-label>
+                                <input matInput placeholder="Nhập tên cửa hàng ở đây" formControlName="name">
+                                <mat-icon matSuffix>storefront</mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-50 mt-3" color="accent" appearance="fill">
+                                <mat-label>Miêu tả cửa hàng</mat-label>
+                                <input matInput placeholder="Nhập miêu tả cửa hàng ở đây" formControlName="description">
+                                <mat-icon matSuffix>description</mat-icon>
+                            </mat-form-field>
+                            <mat-form-field class="w-50 mt-3" color="accent" appearance="fill">
+                                <mat-label>Số điện thoại</mat-label>
+                                <input matInput placeholder="Nhập số điên thoại của bạn" formControlName="phoneNumber">
+                                <mat-icon matSuffix>phone</mat-icon>
+                            </mat-form-field>
+                        </div>
+                        <div align="end">
+                            <div *ngIf="storeInformationForm.invalid; else storeInfoValid">
+                                <button mat-raised-button matStepperNext [disabled]="true">Tiếp theo</button>
+                            </div>
+                            <ng-template #storeInfoValid>
+                                <button class="pastel-bg text-light" mat-raised-button matStepperNext>Tiếp theo</button>
+                            </ng-template>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div class="d-flex flex-row align-items-center">
+                                Địa chỉ lấy hàng <mat-icon class="ms-1 pastel">add_location</mat-icon>
+                            </div>
+                        </ng-template>
+                        <form [formGroup]="storeLocationForm">
+                            <div class="d-flex flex-column w-100 align-items-center my-4">
+                                <mat-form-field class="w-50 mt-3">
+                                    <mat-label>Chọn thành phố, tỉnh</mat-label>
+                                    <mat-select (selectionChange)="loadDistrictsData($event.value)"
+                                        formControlName="cityControl" required>
+                                        <mat-option *ngFor="let province of listProvinces" [value]="province">
+                                            {{province.ProvinceName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50 mt-3">
+                                    <mat-label>Chọn quận, huyện</mat-label>
+                                    <mat-select (selectionChange)="loadWardsData($event.value)"
+                                        formControlName="districtControl" required>
+                                        <mat-option *ngFor="let district of listDistricts" [value]="district">
+                                            {{district.DistrictName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50 mt-3">
+                                    <mat-label>Chọn phường, xã</mat-label>
+                                    <mat-select (selectionChange)="onWardSelect($event.value)"
+                                        formControlName="wardControl" required>
+                                        <mat-option *ngFor="let ward of listWards" [value]="ward">
+                                            {{ward.WardName}}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="w-50 mt-3">
+                                    <mat-label>Địa chỉ lấy hàng</mat-label>
+                                    <input matInput placeholder="Ex. 393 Tran Hung Dao" formControlName="streetControl"
+                                        required>
+                                </mat-form-field>
+                            </div>
+                        </form>
+                        <div align="end">
+                            <button mat-button matStepperPrevious>Trở lại</button>
+                            <div *ngIf="storeInformationForm.invalid; else storeAddressValid">
+                                <button mat-raised-button matStepperNext [disabled]="true">Tiếp theo</button>
+                            </div>
+                            <ng-template #storeAddressValid>
+                                <button (click)="onSubmitAddressData()" class="pastel-bg text-light" mat-raised-button
+                                    matStepperNext>Tiếp theo</button>
+                            </ng-template>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div class="d-flex flex-row align-items-center">
+                                Tải ảnh lên <mat-icon class="ms-1 pastel">image</mat-icon>
+                            </div>
+                        </ng-template>
+                        <form [formGroup]="storeImageForm">
+                            <div class="row mt-2 d-flex flex-column">
+                                <p-divider align="center">
+                                    <span class="text-secondary">Chọn ảnh đại diện cửa hàng</span>
+                                </p-divider>
+                                <input type="file" #fileInput1 (change)="onFileSelected($event, 'image')"
+                                    formControlName="image" hidden>
+                                <button class="mx-auto" type="button" mat-icon-button
+                                    [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'"
+                                    (click)="fileInput1.click()">
+                                    <mat-icon>{{!isImageSelected ? 'image' : 'download_done'}}</mat-icon></button>
+                                <img *ngIf="isImageSelected" [src]="getImagePreviewUrl()" alt="Store Image"
+                                    class="img-preview">
+                            </div>
+                            <div class="row mt-4 d-flex flex-column">
+                                <p-divider align="center">
+                                    <span class="text-secondary">Chọn ảnh bìa cửa hàng</span>
+                                </p-divider>
+                                <input type="file" #fileInput2 (change)="onFileSelected($event, 'thumbnailImage')"
+                                    formControlName="thumbnailImage" hidden>
+                                <button class="mx-auto" type="button" mat-icon-button
+                                    [ngClass]="isThumbnailImageSelected ? 'bg-success text-white':'text-dark'"
+                                    (click)="fileInput2.click()">
+                                    <mat-icon>{{!isThumbnailImageSelected ? 'image' :
+                                        'download_done'}}</mat-icon></button>
+                                <img *ngIf="isThumbnailImageSelected" [src]="getThumbnailImagePreviewUrl()"
+                                    alt="Thumbnail Image" class="img-preview">
+                            </div>
+                        </form>
+                        <div align="end">
+                            <button mat-button matStepperPrevious>Trở lại</button>
+                            <div *ngIf="storeImageForm.invalid; else storeImageValid">
+                                <button mat-raised-button matStepperNext [disabled]="true">Tiếp theo</button>
+                            </div>
+                            <ng-template #storeImageValid>
+                                <button class="pastel-bg text-light" mat-raised-button matStepperNext>Tiếp theo</button>
+                            </ng-template>
+                        </div>
+                    </mat-step>
+                    <mat-step>
+                        <ng-template matStepLabel>
+                            <div class="d-flex flex-row align-items-center">
+                                Kiểm tra thông tin<mat-icon class="ms-1 pastel">check_circle</mat-icon>
+                            </div>
+                        </ng-template>
+                        <p class="text-center web-font text-dark fs-3 mt-4">Vui lòng kiểm tra lại thông tin trước khi xác
+                            nhận</p>
+                            <table class="table mb-5">
+                                <thead>
+                                  <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Mục</th>
+                                    <th scope="col">Thông tin</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr>
+                                    <th scope="row">1</th>
+                                    <td class="web-font">Tên cửa hàng</td>
+                                    <td class="web-font">{{overviewInformation.name}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">2</th>
+                                    <td class="web-font">Miêu tả</td>
+                                    <td class="web-font">{{overviewInformation.description}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">3</th>
+                                    <td class="web-font">Số điện thoại</td>
+                                    <td class="web-font">{{overviewInformation.phoneNumber}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">4</th>
+                                    <td class="web-font">Địa chỉ lấy hàng</td>
+                                    <td class="web-font">{{overviewInformation.location}}</td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">5</th>
+                                    <td class="web-font">Ảnh đại diện cửa hàng</td>
+                                    <td class="web-font"><p-image [src]="getImagePreviewUrl()!" alt="Image" width="100" [preview]="true"></p-image></td>
+                                  </tr>
+                                  <tr>
+                                    <th scope="row">6</th>
+                                    <td class="web-font">Ảnh bìa cửa hàng</td>
+                                    <td class="web-font"><p-image [src]="getThumbnailImagePreviewUrl()!" alt="Image" width="100" [preview]="true"></p-image></td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                        <div align="end">
+                            <button (click)="onSubmit()" align="end" mat-raised-button color="accent">Xác nhận</button>
+                        </div>
+                    </mat-step>
+                </form>
+            </mat-stepper>
+        </div>
+    </div>
+</div>
+
+<div class="d-none">
+    <input id="duration" value="800" type="number" min="0" step="100" #duration>
+</div>
+<p-messages [enableService]="false" [closable]="false"></p-messages>
+<app-loader [loader]="isLoading"></app-loader>

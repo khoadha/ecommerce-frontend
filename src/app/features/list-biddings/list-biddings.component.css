@@ -1,0 +1,16 @@
+:host >>> {
+
+    .p-card-body {
+        padding-top: 12px;
+    }
+
+    .p-card-content {
+        -webkit-line-clamp: 3;
+        padding: 0 !important;
+        /* max-width: 276px; */
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}

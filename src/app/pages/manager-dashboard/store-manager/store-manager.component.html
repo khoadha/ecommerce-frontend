@@ -1,0 +1,224 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<ng-container *ngIf="store">
+    <div class="container mt-3">
+        <p-accordion [multiple]="true" [activeIndex]="[0,1,2,3]">
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Trạng thái cửa hàng</span>
+                        <mat-icon>store</mat-icon>
+                    </div>
+                </ng-template>
+                <div class="d-flex flex-row align-items-baseline">
+                    <h6 class="ms-4 web-font fs-4 my-2 mb-4 pastel fw-bold">(#{{store.id}}) {{store.name}}</h6>
+                </div>
+                <button (click)="navigateToDetail()" mat-raised-button class="bg-info text-light ms-4">Xem shop
+                    <mat-icon>open_in_new</mat-icon></button>
+                <!-- CLOSED -->
+                <ng-container *ngIf="store.isOpen; else isClosed">
+                    <button class="ms-4 web-font bg-success text-light" mat-raised-button
+                        (click)="onCloseStore(store.id)">Mở cửa<mat-icon>lock_open</mat-icon></button>
+                </ng-container>
+                <ng-template #isClosed>
+                    <button class="ms-4 web-font" mat-raised-button color="warn" (click)="onOpenStore(store.id)">Đóng
+                        cửa<mat-icon>lock</mat-icon></button>
+                </ng-template>
+                <!-- VERIFIED -->
+                <ng-container *ngIf="store.isVerified; else isNotVerified">
+                    <button class="ms-4 web-font noHover" mat-button color="accent">Đã xác
+                        minh<mat-icon>verified</mat-icon></button>
+                </ng-container>
+                <ng-template #isNotVerified>
+                    <button class="ms-4 web-font noHover text-warning" mat-button>Chưa được xác
+                        minh<mat-icon>pending</mat-icon></button>
+                </ng-template>
+                <!-- END VERIFIED -->
+                <!-- BANNED -->
+                <ng-container *ngIf="!store.isBanned; else isBanned">
+                    <button class="ms-4 web-font noHover text-success" mat-button>Công
+                        khai<mat-icon>public</mat-icon></button>
+                </ng-container>
+                <ng-template #isBanned>
+                    <button class="ms-4 web-font noHover" mat-button color="warn">Bị
+                        cấm<mat-icon>public_off</mat-icon></button>
+                </ng-template>
+                <!-- END BANNED -->
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Trạng thái đơn hàng và thống kê</span>
+                        <mat-icon>analytics</mat-icon>
+                    </div>
+                </ng-template>
+                <ng-container *ngIf="orderCountStatistic && lastMonthRevenueData">
+                    <div class="d-flex flex-row justify-content-between">
+                        <div class="col-3">
+                            <div class="card shadow-xs border h-100">
+                                <div class="card-header pb-0">
+                                    <div class="d-sm-flex align-items-center mb-3">
+                                        <div>
+                                            <h6 class="fw-bold mb-0 web-font pastel">Biểu đồ tròn trạng thái đơn hàng
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <button pButton label="Xem thống kê" class="bg-warning text-light mb-4"
+                                        icon="pi pi-chart-bar" (click)="onShowStatistic()"></button>
+                                    <app-bar-chart [data]="orderCountStatistic"></app-bar-chart>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-9 ps-2">
+                            <div class="card shadow-xs border h-100">
+                                <div class="card-header pb-0">
+                                    <div class="d-sm-flex align-items-center mb-3">
+                                        <div>
+                                            <h6 class="fw-bold mb-0 web-font pastel">Thống kê doanh thu theo ngày (trong 1 tháng gần nhất)</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <app-line-chart [data]="lastMonthRevenueData"></app-line-chart>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Các sản phẩm bán chạy nhất</span>
+                        <mat-icon class="text-danger">local_fire_department</mat-icon>
+                    </div>
+                </ng-template>
+                <div class="col-12">
+                    <p-table [value]="topBySale" [tableStyle]="{'min-width': '60rem'}">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>#</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Lượt xem</th>
+                                <th>Lượt bán ra</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>{{product.id}}</td>
+                                <td>{{product.name}}</td>
+                                <td><img [src]="product.imgPath" [alt]="product.name" width="60" class="shadow-4" />
+                                </td>
+                                <td>{{product.viewCount}}</td>
+                                <td>{{product.numberOfSales}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Các sản phẩm nhiều lượt xem nhất</span>
+                        <mat-icon>visibility</mat-icon>
+                    </div>
+                </ng-template>
+                <div class="col-12">
+                    <p-table [value]="topByView" [tableStyle]="{'min-width': '60rem'}">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>#</th>
+                                <th>Tên sản phẩm</th>
+                                <th>Hình ảnh</th>
+                                <th>Lượt xem</th>
+                                <th>Lượt bán ra</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-product>
+                            <tr>
+                                <td>{{product.id}}</td>
+                                <td>{{product.name}}</td>
+                                <td><img [src]="product.imgPath" [alt]="product.name" width="60" class="shadow-4" />
+                                </td>
+                                <td>{{product.viewCount}}</td>
+                                <td>{{product.numberOfSales}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Thông tin cửa hàng</span>
+                        <mat-icon>feed</mat-icon>
+                    </div>
+                </ng-template>
+                <form [formGroup]="updateStoreForm" class="col-md-4">
+                    <div class="row mt-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tên cửa hàng</mat-label>
+                            <input [disabled]="true" matInput placeholder="Nhập tên cửa hàng tại đây"
+                                formControlName="name">
+                            <mat-icon matSuffix>business</mat-icon>
+                        </mat-form-field>
+                    </div>
+                    <div class="row mt-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Miêu tả cửa hàng</mat-label>
+                            <input matInput placeholder="Nhập miêu tả cửa hàng tại đây" formControlName="description">
+                            <mat-icon matSuffix>description</mat-icon>
+                        </mat-form-field>
+                    </div>
+                </form>
+                <div class="row d-flex justify-content-end me-1">
+                    <button (click)="resetForm()" style="width: 10%;" mat-raised-button>Đặt lại
+                        <mat-icon>restart_alt</mat-icon></button>
+                    <button (click)="onUpdateStore()" style="width: 14%;" mat-raised-button
+                        class="pastel-bg text-light ms-2" [disabled]="!updateStoreForm.valid">Cập nhật
+                        <mat-icon>update</mat-icon></button>
+                </div>
+            </p-accordionTab>
+            <p-accordionTab>
+                <ng-template pTemplate="header">
+                    <div class="d-flex align-items-center">
+                        <span class="vertical-align-middle web-font me-2">Hình ảnh cửa hàng</span>
+                        <mat-icon>image</mat-icon>
+                    </div>
+                </ng-template>
+                <div class="container">
+                    <div class="d-flex flex-row align-items-center">
+                        <div style="min-width: 300px;" class="ms-5 d-flex flex-row align-items-baseline gap-3">
+                            <h4 class="web-font pastel fw-bold">Ảnh đại diện</h4>
+                            <button mat-raised-button class="pastel-bg text-light" (click)="fileInput1.click()">
+                                Tải lên
+                                <mat-icon>attach_file</mat-icon></button>
+                        </div>
+                        <div class="main-image-container">
+                            <img [src]="store.imgPath" alt="Profile Image" class="img-preview"
+                                style="max-width: 100%; max-height: 100%;">
+                            <input type="file" #fileInput1 style="display: none"
+                                (change)="onImageFileSelected($event, store.id)" />
+                        </div>
+                    </div>
+                    <div class="d-flex flex-row align-items-center mt-3">
+                        <div style="min-width: 300px;" class="ms-5 d-flex flex-row align-items-baseline gap-3">
+                            <h4 class="web-font pastel fw-bold">Ảnh bìa</h4>
+                            <button mat-raised-button class="pastel-bg text-light" (click)="fileInput2.click()">
+                                Tải lên
+                                <mat-icon>attach_file</mat-icon></button>
+                        </div>
+                        <div class="main-image-container">
+                            <img [src]="store.thumbnailImgPath" alt="Profile Image" class="img-preview"
+                                style="max-width: 100%; max-height: 100%;">
+                            <input type="file" #fileInput2 style="display: none"
+                                (change)="onThumbnailFileSelected($event, store.id)" />
+                        </div>
+                    </div>
+                </div>
+            </p-accordionTab>
+        </p-accordion>
+    </div>
+</ng-container>

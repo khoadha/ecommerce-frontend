@@ -1,0 +1,90 @@
+<div class="vh-100">
+    <div class="container d-flex gap-5">
+        <div class="col-md-12">
+            <ng-container *ngIf="list">
+                <p-table
+                #dt
+                [columns]="cols"
+                [value]="list"
+                [rows]="10"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                [paginator]="true"
+                [tableStyle]="{ 'min-width': '75%' }"
+                [rowHover]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} danh mục"
+                [showCurrentPageReport]="true">
+                <ng-template pTemplate="caption">
+                    <h1 class="m-0 mb-2 web-font pastel text-center fw-bold">Danh sách cửa hàng</h1>
+                    <div class="flex">
+                        <div>
+                            <span class="p-input-icon-left">
+                                <i class="pi pi-search"></i>
+                                <input 
+                                    pInputText 
+                                    type="text" 
+                                    (input)="dt.filterGlobal($event.target.value, 'contains')" 
+                                    placeholder="Tìm kiếm..." />
+                            </span>
+                        </div>
+                    </div>                   
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns">
+                            {{col.header}}
+                        </th>
+                    </tr>                  
+                </ng-template>
+                <!-- <ng-template pTemplate="body" let-rowData let-columns="columns">
+                    <tr [pSelectableRow]="rowData">
+                        <td *ngFor="let col of columns">{{rowData[col.field]}}</td>
+                    </tr>
+                </ng-template> -->
+                <ng-template pTemplate="body" let-list>
+                    <tr>
+                        <td>{{ list.id }}</td>
+                        <td>{{ list.managerUsername }}</td>
+                        <td>{{ list.name }}</td>
+                        <td>{{ list.description }}</td>
+                        <td>{{ list.location }}</td>
+                        <td>
+                            <ng-container *ngIf="list.isOpen; else isClose">
+                                <button disabled class="text-success bg-transparent"
+                                    mat-mini-fab><mat-icon>meeting_room</mat-icon></button>
+                            </ng-container>
+                            <ng-template #isClose>
+                                <button disabled class="text-danger bg-transparent"
+                                    mat-mini-fab><mat-icon>door_front</mat-icon></button>
+                            </ng-template>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="list.isVerified; else isUnverified">
+                                <button (click)="onUnverify(list.id)" class="text-primary bg-white"
+                                    mat-mini-fab><mat-icon>done</mat-icon></button>
+                            </ng-container>
+                            <ng-template #isUnverified>
+                                <button (click)="onVerify(list.id)" class="text-danger bg-white"
+                                    mat-mini-fab><mat-icon>close</mat-icon></button>
+                            </ng-template>
+                        </td>
+                        <td>
+                            <ng-container *ngIf="list.isBanned; else isNotBanned">
+                                <button (click)="onUnban(list.id)" class="bg-danger text-white" mat-mini-fab>
+                                    <mat-icon>cancel</mat-icon>
+                                </button>
+                            </ng-container>
+                            <ng-template #isNotBanned>
+                                <button (click)="onBan(list.id)" class="bg-success text-white" mat-mini-fab>
+                                    <mat-icon>task_alt</mat-icon>
+                                </button>
+                            </ng-template>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            </ng-container>
+        </div>
+    </div>
+    <p-divider></p-divider>
+    <p-divider></p-divider>
+</div>

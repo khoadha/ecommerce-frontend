@@ -1,0 +1,23 @@
+<footer class="text-center text-white pastel-bg">
+  <div class="container-fluid" class="bg-light">
+    <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 border-top">
+      <p class="mb-0 ps-5 text-dark web-font">&copy; 2024 Wemade, Inc</p>
+      <div class="d-flex">
+          <button style="background:linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);" 
+        (click)="onClickFanpage('ig')" [matTooltip]="'Instagram Wemade Việt Nam'" tooltipPosition="bottom" mat-mini-fab>
+          <i class="pi pi-instagram text-light"></i>
+        </button>
+          <button class="ms-3" style="background: #4b67b2;" (click)="onClickFanpage('fb')" [matTooltip]="'Facebook Wemade Việt Nam'" tooltipPosition="bottom" mat-mini-fab>
+            <i class="pi pi-facebook text-light"></i>
+          </button>
+        <button class="ms-3 bg-info" routerLink="/instruction-page" [matTooltip]="'Hướng dẫn sử dụng nền tảng'" tooltipPosition="bottom" mat-mini-fab>
+          <i class="pi pi-info-circle text-light"></i>
+        </button>
+      </div>
+      <ul class="nav justify-content-end">
+        <li class="nav-item"><a routerLink='/' style="font-size: 14px;" class="web-font nav-link px-2 text-dark">Trang chủ</a></li>
+        <li class="nav-item"><a target="_blank" routerLink="/term-of-use" style="font-size: 14px;" class="web-font nav-link px-2 text-dark">Điều khoản sử dụng</a></li>
+      </ul>
+    </footer>
+  </div>
+</footer>

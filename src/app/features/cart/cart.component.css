@@ -1,0 +1,52 @@
+.empty-cart-msg {
+  font-family: 'Comic Sans MS';
+  font-size: 40px;
+  line-height: 50px;
+}
+
+.child {
+  top: 20%;
+  right: 34%;
+}
+
+.noHover {
+  pointer-events: none;
+}
+
+.auth-bg-image {
+  background-image: url('src\assets\images\auth-bg-image.jpg'); 
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat;
+  display: flex;
+  justify-content: center; /* Horizontally center content */
+  align-items: center; /* Vertically center content */
+  min-height: 100vh;
+}
+
+.quantity-buttons.hidden {
+  display: hidden;
+}
+
+:host >>> {
+  .disabled-button {
+    background-color: gray !important;
+    color: white !important;
+  }
+
+  .p-button.p-button-icon-only {
+    background-color: #999b6d !important;
+    border: none;
+}
+
+.p-button.p-button-icon-only:hover {
+    background-color: #7f8159 !important;
+}
+
+.p-checkbox .p-checkbox-box.p-highlight {
+    border-color: #999b6d !important;
+    background: #999b6d !important;
+}
+
+}
+

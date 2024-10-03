@@ -1,0 +1,269 @@
+<app-loader [loader]="maskLoading"></app-loader>
+<p-toast></p-toast>
+<ng-container *ngIf="product && store && feedbacks">
+    <app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+    <div class="container p-0" style="max-width: 1200px; min-height: 1000px;">
+        <div class="row h-100 col-12 mt-5">
+            <div class="col-5">
+                <div class="card">
+                    <p-galleria [showIndicators]="false" [showItemNavigators]="false"
+                        [responsiveOptions]="responsiveOptions" [containerStyle]="{ 'max-width': '100%' }"
+                        [numVisible]="5" [value]="images">
+                        <ng-template pTemplate="item" let-item>
+                            <img [src]="item.itemImageSrc" style="width: 100%; height: 500px;" [alt]="item.alt" />
+                        </ng-template>
+                        <ng-template pTemplate="thumbnail" let-item>
+                            <div class="justify-content-center">
+                                <img class="px-2" style="width: 60px; height: 60px;" [src]="item.thumbnailImageSrc"
+                                    [alt]="item.alt" />
+                            </div>
+                        </ng-template>
+                    </p-galleria>
+                </div>
+            </div>
+            <div class="col-7">
+                <div class="d-flex flex-row w-100 justify-content-between">
+                    <div class="col-9">
+                        <h1 class="fs-3 web-font fw-bold">{{product.name}}</h1>
+                    </div>
+                    <div class="col-3">
+                        <button (click)="onClickReport()" mat-raised-button class="bg-danger web-font text-light ms-3">Báo cáo <mat-icon>report</mat-icon></button>
+                    </div>
+                </div>
+                <div class="d-flex flex-row mb-1">
+
+                    <div class="d-flex flex-row">
+                        <ng-container *ngIf="ratingData.averageRating > 0; else noFbYet">
+                            <ng-container *ngFor="let star of [].constructor(ratingData.averageRating)">
+                                <mat-icon class="text-warning">star</mat-icon>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noFbYet>
+                            <span class="pastel fw-bold web-font">Chưa có đánh giá</span>
+                        </ng-template>
+                    </div>
+                    <p-divider layout="vertical"></p-divider>
+                    <div class="web-font">
+                        <span class="fw-bold">{{ratingData.totalRating}}</span> &nbsp; Đánh giá
+                    </div>
+                    <p-divider layout="vertical"></p-divider>
+                    <div class="web-font">
+                        <span class="fw-bold">{{product.numberOfSales}}</span> &nbsp; Đã bán
+                    </div>
+                </div>
+                <div class="d-flex flex-row mt-4">
+                    <!-- <p class="mt-1"><del class="web-font px-2">{{'100000' | vndCurrencyPipe}}</del></p> -->
+                    <h1 class="web-font px-2 pastel fw-bold fs-2">{{product.price| vndCurrencyPipe}} </h1>
+                    <!-- <h2><span class="ms-2 mb-1 badge text-light" style="background-color: brown;">50% giảm</span></h2> -->
+                </div>
+                <!-- <div class="d-flex flex-row mt-1">
+                <h1 class="web-font px-4 text-secondary fs-5 mb-0 ps-1">Địa chỉ: 
+                <span class="fw-bold pastel ms-4">Thành Phố Hà Nội</span>
+            </h1>
+            </div> -->
+                <div class="d-flex flex-row align-items-center mt-3">
+                    <h1 class="web-font px-4 text-secondary fs-5 mb-0 ps-1">Số lượng </h1>
+                    <p-inputNumber [min]="1" [max]="99" [(ngModel)]="quantityValue" [showButtons]="true"
+                        buttonLayout="horizontal" [step]="1" decrementButtonClass="pastel-bg"
+                        incrementButtonClass="pastel-bg" incrementButtonIcon="pi pi-plus"
+                        decrementButtonIcon="pi pi-minus"></p-inputNumber>
+                </div>
+                <div class="d-flex flex-row align-items-center mt-4 process-button-container">
+                    <button (click)="onAddToCart(product.id, product.name)" mat-stroked-button type="button"
+                        class="btn"><mat-icon>add_shopping_cart</mat-icon>Thêm vào giỏ
+                        hàng</button>
+                    <button (click)="onClickBuyNow()" mat-raised-button type="button"
+                        class="btn pastel-bg btn-lg ms-4 text-light px-5">Mua
+                        ngay</button>
+                </div>
+                <div class="my-3 d-flex align-items-center gap-2 flex-wrap mt-4">
+                    <h1 class="web-font px-4 text-secondary fs-5 mb-0 ps-1">Danh mục </h1>
+                    <ng-container *ngFor="let category of categories">
+                        <a style="pointer-events: none;">
+                            <p-chip>
+                                <div class="fs-6 p-2 web-font fw-bold text-light">
+                                    <span style="font-size: 14px;">{{category.name}}</span>
+                                </div>
+                            </p-chip>
+                        </a>
+                    </ng-container>
+                </div>
+                <div class="my-3 d-flex align-items-center gap-2 flex-wrap mt-4">
+                    <h1 class="web-font px-4 text-secondary fs-5 mb-0 ps-1">Chất liệu </h1>
+                    <ng-container *ngFor="let material of materials">
+                        <a style="pointer-events: none;">
+                            <p-chip>
+                                <div class="fs-6 p-2 web-font fw-bold text-light">
+                                    <span style="font-size: 14px;">{{material.name}}</span>
+                                </div>
+                            </p-chip>
+                        </a>
+                    </ng-container>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 my-3 w-100">
+            <p-fieldset>
+                <ng-template pTemplate="header">
+                    <p class="web-font fs-3 pastel my-1 fw-normal">Miêu tả sản phẩm</p>
+                </ng-template>
+                <div>
+                    <div [innerHTML]="product.description | richTextToHtml"></div>
+                </div>
+            </p-fieldset>
+
+        </div>
+        <div class="my-3">
+            <mat-card class="shadow-none p-3 mb-2 bg-body-tertiary rounded border border-2">
+                <div class="row d-flex flex-row">
+                    <div class="col-4">
+                        <div class="d-flex flex-row">
+                            <div class="img">
+                                <img width="100" height="100" class="rounded-circle my-3 ms-3" [src]="store.imgPath">
+                            </div>
+                            <div class="ms-3 mt-4">
+                                <div class="d-flex flex-column">
+                                    <div class="web-font pastel fw-bold fs-6 my-1">{{store.name}}</div>
+                                    <div class="d-flex flex-row store-details-container my-1">
+                                        <button mat-stroked-button type="button" class="btn"
+                                            (click)="onClickOpenChatting()"><mat-icon>chat_bubble</mat-icon>Nhắn
+                                            tin</button>
+                                        <button (click)="onClickViewStore()" mat-stroked-button type="button"
+                                            class="btn pastel-bg ms-2 text-light"><mat-icon>store_front</mat-icon>Xem
+                                            shop</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-2">
+                        <div class="d-flex flex-column mt-4">
+                            <div class="web-font fs-6 my-3 d-flex justify-content-between">
+                                <div class="web-font">Đánh giá</div>
+                                <div class="web-font pastel">{{storeOverviewStatistic.totalProductRatingCount}}</div>
+                            </div>
+                            <div class="web-font fs-6 my-3 d-flex justify-content-between">
+                                <div class="web-font">Sản phẩm</div>
+                                <div class="web-font pastel">{{storeOverviewStatistic.totalProductCount}}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-1"></div>
+                    <div class="col-3">
+                        <div class="d-flex flex-column mt-4">
+                            <div class="web-font fs-6 my-3 d-flex justify-content-between">
+                                <div class="web-font">Tỉ lệ phản hồi</div>
+                                <div class="web-font pastel">100%</div>
+                            </div>
+                            <div class="web-font fs-6 my-3 d-flex justify-content-between">
+                                <div class="web-font">Thời gian phản hồi</div>
+                                <div class="web-font pastel">Trong 1 tiếng</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+        </div>
+        <div class="my-3">
+            <p-fieldset>
+                <ng-template pTemplate="header">
+                    <div class="d-flex w-100 justify-content-between align-items-center">
+                        <p class="web-font fs-3 pastel my-1 fw-normal">Đánh giá sản phẩm</p>
+                    <button (click)="onAttempSubmitFeedback()" mat-raised-button class="pastel-bg web-font text-light ms-3">Tạo đánh giá <mat-icon>rate_review</mat-icon></button>
+                    </div>
+                </ng-template>
+                <div class="row d-flex w-100">
+                    <div class="col-12 pt-2">
+                        <ng-container *ngIf="feedbacks.length>0; else noFbData">
+                            <ng-container *ngFor="let feedback of feedbacks">
+                                <div class="card-body web-font">
+                                    <div class="d-flex flex-start">
+                                            <img height="50" width="50" class="rounded-circle me-4"
+                                            [src]="feedback.userImage" alt="ảnh đại diện người dùng"/>
+                                        <div>
+                                            <div class="d-flex flex-row align-items-baseline">
+                                                <h4 class="fs-5 fw-bold mb-1 web-font pastel">{{feedback.username}}</h4>
+                                                <div class="d-flex align-items-baseline ms-2">{{feedback.createdDate | date:'short'}}</div>
+                                            </div>
+                                            <div class="d-flex flex-row mb-2">
+                                                Đánh giá: &nbsp;
+                                                <ng-container *ngFor="let star of [].constructor(feedback.rating)">
+                                                    <mat-icon class="text-warning">star</mat-icon>
+                                                </ng-container>
+                                            </div>
+                                            <div class="d-flex flex-row mb-3">
+                                                <ng-container *ngFor="let fi of feedback.listImages">
+                                                    <div class="mx-1">
+                                                        <p-image
+                                                            [src]="fi"
+                                                            alt="Image" width="80" height="80" [preview]="true"></p-image>
+                                                    </div>
+                                                </ng-container>
+                                            </div>
+                                            <p class="mb-0 web-font d-block">
+                                                <ng-container *ngIf="feedback.description != 'undefined' && feedback.description != null; else nullDesc">
+                                                    {{feedback.description}}
+                                                </ng-container>
+                                                <ng-template #nullDesc>
+                                                    <span class="fw-bold pastel">Người dùng này không để lại bình luận</span>
+                                                </ng-template>
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                                <p-divider></p-divider>
+                            </ng-container>
+                            <div class="flex justify-content-center w-100 align-items-center mt-5">
+                                <p-paginator
+                                  #paginator
+                                  [first]="0"
+                                  [rows]="5"
+                                  [totalRecords]="totalFeedbacks"
+                                  (onPageChange)="onPageChange($event)"
+                                ></p-paginator>
+                              </div>
+                        </ng-container>
+                          <ng-template #noFbData>
+                            <div class="d-flex justify-content-center flex-column align-items-center">
+                                <img style="width: 30%; height: auto;" src="assets/images/no-product-found.png">
+                                <div class="pastel web-font fs-4 mb-4">Hiện chưa có đánh giá nào cho sản phẩm này!</div>
+                            </div>
+                          </ng-template>
+                    </div>
+                </div>
+            </p-fieldset>
+        </div>
+        
+        <div class="my-3">
+            <p-fieldset>
+                <ng-template pTemplate="header">
+                    <p class="web-font fs-3 pastel my-1 fw-normal">Các sản phẩm khác được đề xuất</p>
+                </ng-template>
+                <app-list-products [isCarousel]="false" [listProducts]="appListProducts"
+                    [itemsPerRow]="6"></app-list-products>
+            </p-fieldset>
+        </div>
+    </div>
+
+    <div *ngIf="showToolbar" id="myToolbar">
+        <mat-toolbar class="position-fixed d-flex justify-content-between align-items-center py-3">
+            <div class="nav-product-name">
+                <p class="web-font fw-bold">{{product.name}}</p>
+            </div>
+            <div class="d-flex flex-row align-items-center process-button-container">
+                <!-- <button mat-icon-button color="warn" aria-label="add to favourite icon">
+                <mat-icon>favorite</mat-icon>
+            </button> -->
+                <button (click)="onAddToCart(product.id, product.name)" mat-stroked-button type="button"
+                    class="btn ms-4"><mat-icon>add_shopping_cart</mat-icon>Thêm vào giỏ hàng</button>
+                <button (click)="onClickBuyNow()" mat-raised-button type="button"
+                    class="btn pastel-bg btn-lg ms-4 text-light px-5">Mua ngay</button>
+            </div>
+        </mat-toolbar>
+    </div>
+
+
+
+
+</ng-container>

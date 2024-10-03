@@ -1,0 +1,207 @@
+    .product-card {
+        background-color: white;
+    }
+
+    .card-title {
+        max-width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-family: 'Consolas';
+    }
+
+    .my-overflow {
+        overflow: inherit;
+    }
+
+    .cardHover {
+        z-index: 1;
+        border: 1px solid transparent;
+    }
+
+    .cardHover:hover {
+        border: 1px solid #999b6d;
+    }
+
+    .noHover {
+        pointer-events: none;
+    }
+
+    .product-store-image-button {
+        width: 10%;
+    }
+
+    .product-store-image-button img {
+        border-radius: 50%;
+    }
+
+    .load-wraper {
+        position: relative;
+        height: 100%;
+        width: 100%;
+        background: rgb(227, 227, 227);
+        background: linear-gradient(90deg, rgba(227, 227, 227, 1) 0%, rgba(182, 182, 182, 1) 7%, rgba(182, 182, 182, 1) 13%, rgba(227, 227, 227, 1) 25%);
+        background-size: 900%;
+        background-position: 100% 0%;
+        z-index: 44;
+        overflow: hidden;
+        border-radius: 5px;
+    }
+
+    .ph-card {
+        margin: 20px;
+        height: 260px;
+        position: relative;
+        float: left;
+    }
+
+    .ph-card-image {
+        height: 200px;
+        width: 100%;
+        position: relative;
+    }
+
+    .ph-card-content {
+        margin-top: 20px;
+        min-height: 40px;
+        display: flex;
+    }
+
+    .ph-card-avatar {
+        width: 40px;
+        float: left;
+        flex: none;
+    }
+
+    .ph-card-avatar-text {
+        margin-left: 20px;
+        float: left;
+    }
+
+    .ph-card-content,
+    .ph-card-text,
+    .ph-card-avatar,
+    .ph-card-avatar-text {
+        height: 40px;
+        position: relative;
+    }
+
+    .ph-card-content,
+    .ph-card-text,
+    .ph-card-avatar-text {
+        width: 100%;
+    }
+
+    .circular {
+        border-radius: 50%;
+    }
+
+    .activity {
+        position: absolute;
+        left: -45%;
+        height: 100%;
+        width: 45%;
+        background-image: linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+        background-image: -moz-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+        background-image: -webkit-linear-gradient(to left, rgba(251, 251, 251, .05), rgba(251, 251, 251, .3), rgba(251, 251, 251, .6), rgba(251, 251, 251, .3), rgba(251, 251, 251, .05));
+        animation: loading 1s infinite;
+        z-index: 45;
+    }
+
+    @keyframes loading {
+        0% {
+            left: -45%;
+        }
+
+        100% {
+            left: 100%;
+        }
+    }
+
+    @keyframes left-right {
+        0% {
+            left: -30%;
+        }
+
+        50% {
+            left: 100%
+        }
+
+        100% {
+            left: -45%;
+        }
+    }
+
+    :host >>> {
+        .p-carousel-indicators .p-carousel-indicator.p-highlight button {
+          background-color: #999b6d !important;
+        }
+
+        .mat-mdc-raised-button:first-child {
+            background: #e8e7e7 !important;
+        }
+
+        .mat-mdc-raised-button>.mat-icon {
+            display: inline-block;
+            position: relative;
+            vertical-align: top;
+            font-size: 1.125rem;
+            height: 1.125rem;
+            width: 1.125rem;
+            margin: 0 !important;
+        }
+
+
+        .toggle-button-container {
+            position: absolute;
+            top: 2%;
+            right: 16%;
+            z-index: 100 !important;
+
+            .p-togglebutton.p-button:not(.p-disabled):not(.p-highlight):hover {
+                background: #e9ecef;
+                border: none;
+                color: #495057;
+            }
+            .p-togglebutton.p-button.p-highlight {
+                background: white !important;
+                border: none;
+                color: #ffffff;
+            }
+        
+            .p-button:focus {
+                box-shadow: none;
+            }
+
+            .pi-heart:before {
+                content: "\e9e1";
+                font-size: 20px;
+            }
+
+            .pi-heart-fill:before {
+                content: "\e9e1";
+                font-size: 20px;
+                color: white;
+                border: #495057;
+            }
+    
+            .pi-heart-fill:before {
+                content: "\e9e1";
+                font-size: 20px;
+                color: red;
+            }
+        }
+
+        .p-link:focus {
+          box-shadow: none;
+        }
+      
+        .p-carousel-content .p-carousel-prev:focus,
+        .p-carousel-content .p-carousel-next:focus {
+          box-shadow: none;
+        }
+      
+        .p-carousel-indicators {
+          padding: 1rem 0;
+        }
+      }

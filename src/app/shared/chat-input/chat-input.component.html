@@ -1,0 +1,15 @@
+<form #messageForm="ngForm" (ngSubmit)="sendMessage()" autocomplete="off">
+  <div class="form-group mt-3 mb-0 row">
+    <div class="col-10">
+      <textarea type="text" [(ngModel)]="content" name="content" required class="form-control" style="resize: none;"
+        placeholder="Send message"></textarea>
+    </div>
+    <div class="col-2" style="align-self: center;">
+      <div class="d-grid">
+        <button [disabled]="!messageForm.valid" class="btn btn-dark btn-block">
+          <mat-icon>send</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</form>

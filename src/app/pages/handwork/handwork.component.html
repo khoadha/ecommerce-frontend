@@ -1,0 +1,74 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<mat-drawer-container autosize>
+    <mat-drawer mode="side" opened class="col-2">
+        <div class="d-flex flex-column w-100">
+            <div class="d-flex w-100 flex-column align-items-center">
+            <h1 class="web-font fw-bold mt-3 fs-6 mb-2">Danh Mục</h1>
+                <div class="d-flex justify-content-center">
+                    <p-multiSelect [baseZIndex]="10" placeholder="Chọn danh mục &nbsp;&nbsp;" [options]="categories"
+                        [(ngModel)]="selectedCategories" optionLabel="name" [maxSelectedLabels]="0"
+                        [selectedItemsLabel]="'Đã chọn {0} mục &nbsp;&nbsp;&nbsp;'"></p-multiSelect>
+                </div>
+            </div>
+            <div class="d-flex w-100 flex-column align-items-center">
+            <h1 class="web-font fw-bold mt-3 fs-6 mb-2">Khoảng Giá</h1>
+                <p-inputNumber class="p-inputtext-sm" placeholder="₫ Từ" [(ngModel)]="fromPrice"
+                    inputId="fromPrice" locale="en-vn"></p-inputNumber>
+                <mat-icon class="my-1">arrow_downward</mat-icon>
+                <p-inputNumber class="p-inputtext-sm" placeholder="₫ Đến" [(ngModel)]="toPrice" inputId="toPrice"
+                 locale="en-vn"></p-inputNumber>
+            </div>
+            <div class="d-flex w-100 flex-column align-items-center">
+                <h1 class="web-font fw-bold mt-3 fs-6 mb-2">Đánh giá</h1>
+                <div class="flex flex-column gap-3">
+                    <div *ngFor="let option of starOption" class="field-checkbox">
+                        <div class="d-flex flex-row gap-1 align-items-center">
+                            <p-radioButton [inputId]="option.name" name="starOption" [value]="option.value" [(ngModel)]="selectedStarOptions"></p-radioButton>
+                            <label [for]="option.name" class="ml-2">
+                               <div style="font-size: 12px;" class="web-font">{{ option.name }}</div> 
+                            </label>
+                            <div *ngFor="let i of option.numberOfStars">
+                                <mat-icon style="font-size: 18px; width: 18px;" class="text-warning mt-2">star</mat-icon>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div class="mt-5 d-flex justify-content-evenly">
+                    <button mat-raised-button color="warn">Xóa bộ lọc
+                        <mat-icon>close</mat-icon>
+                    </button>
+                    <button mat-raised-button class="pastel-bg text-light">Lọc
+                        <mat-icon>filter_alt</mat-icon>
+                    </button>
+                </div>
+        </div>
+
+    </mat-drawer>
+    <mat-drawer-content class="mt-4">
+        <div class="container custom-container-height">
+            <h1 class="web-font pastel ms-2">Thủ công</h1>
+            <div class="d-flex flex-row align-items-center justify-content-between">
+                <ng-container *ngIf="searchQuery">
+                    <span class="ms-3 fs-6 web-font search-title">Kết quả tìm kiếm cho từ khoá <span
+                            class="pastel">'{{searchQuery}}'</span></span>
+                </ng-container>
+                <form class="me-5 ms-auto" [formGroup]="formGroup">
+                    <label class="web-font fs-6 pastel me-3"><mat-icon class="pt-1">sort</mat-icon> Sắp xếp theo</label>
+                    <p-dropdown class="p-inputtext-sm" formControlName="selectedOption" [options]="sortItems"
+                        optionValue="code" optionLabel="name" (onChange)="sortProducts($event.value)"></p-dropdown>
+                </form>
+            </div>
+            <br>
+            <p-divider class="pastel-bg p-0 mt-0" align="center">
+                <div class="inline-flex align-items-center">
+                    <mat-icon class="pastel bg-transparent">travel_explore</mat-icon>
+                </div>
+            </p-divider>
+            <br>
+            <div class="mx-3">
+                <app-list-products [listProducts]="listProducts" [itemsPerRow]="5"></app-list-products>
+            </div>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>

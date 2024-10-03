@@ -1,0 +1,242 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<app-loader [loader]="isLoading"></app-loader>
+<p-toast></p-toast>
+
+<div class="auth-bg-image">
+  <section class="vh-100" *ngIf="profile">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col col-lg-12 mb-4 mb-lg-0">
+          <div class="card h-100" style="border-radius: .5rem;">
+            <div class="row g-0 h-100">
+              <div class="col-md-4 gradient-custom text-center text-white d-flex flex-column justify-content-center align-items-center">
+                <div class="profile-container">
+                  <img [src]="profile.imgPath" alt="Avatar" class="profile-image img-fluid mt-5" />
+                  <i class="pi pi-camera mt-1" (click)="openAvatarDialog()"></i>
+                </div>
+                <div class="profile-details">
+                  <h5>
+                    {{ profile.userName }}
+                    <span class="pi pi-file-edit" (click)="openUserNameDialog()"></span>            
+                  </h5>
+                  <p>{{ profile.email }}</p>
+                  <div class="mb-5"></div>
+                </div>
+              </div>
+
+              <div class="col-md-8 d-flex flex-column">
+                <div class="card-body p-4 flex-grow-1 d-flex flex-column">
+                  <p-tabView class="flex-grow-1">
+                    <p-tabPanel header="Tài khoản">
+                      <div class="content-item">
+                        <h6 class="content-text">Email</h6>
+                        <p class="content-text text-muted">{{ profile.email }}</p>
+                      </div>
+                      <div class="content-item">
+                        <h6 class="content-text">Số điện thoại</h6>
+                        <p class="content-text text-muted">{{ profile.phoneNumber ? profile.phoneNumber : 'Chưa có số điện thoại' }}</p>
+                        <i class="pi pi-angle-right icon" (click)="openPhoneNumberDialog()"></i>
+                      </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Wemade Points">
+                      <div class="content-item">
+                        <h6 class="content-text">Wemade Points</h6>
+                        <p class="content-text text-muted">{{ profile.wemadePoint }}</p>
+                        <a routerLink="/wemade-pay">
+                          <i class="pi pi-angle-right icon"></i>
+                        </a>
+                      </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Bảo mật" *ngIf="loginMethod === 'Normal'">
+                      <div class="content-item">
+                        <h6 class="content-text">Mật khẩu</h6>
+                        <p class="content-text text-muted">•••••••••</p>
+                        <i class="pi pi-angle-right icon" (click)="openPasswordDialog()"></i>
+                      </div>
+                    </p-tabPanel>
+                  </p-tabView>  
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<p-dialog 
+  header="Chỉnh sửa Profile" 
+  [style]="{ width: '25rem' }"
+  [(visible)]="updateUserNameVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <span class="p-text-secondary block mb-5">Cập nhật tên của bạn.</span>
+  <div class="field">
+    <div class="p-inputgroup my-2">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-user"></i>
+      </span>
+      <input 
+        pInputText 
+        placeholder="Tên người dùng" 
+        [(ngModel)]="newUsername" 
+        input="text" 
+        autocomplete="off" 
+        required 
+        autofocus
+        (ngModelChange)="validateUsername()"/>
+    </div>
+    <small *ngIf="userNameError" class="p-error"> Vui lòng nhập tên đủ 8-14 kí tự, bao gồm chữ và số.</small>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Quay lại" class="p-button-text" (click)="updateUserNameVisible = false"></button>
+    <button pButton pRipple label="Thay đổi" icon="pi pi-check" class="p-button-text pastel-bg text-light" (click)="updateUsername()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog 
+  header="Chỉnh sửa Profile" 
+  [style]="{ width: '25rem' }"
+  [(visible)]="updatePhoneNumberVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <span class="p-text-secondary block mb-5">Cập nhật số điện thoại của bạn.</span>
+  <div class="field">
+    <div class="p-inputgroup my-2">
+      <span class="p-inputgroup-addon">
+        <i class="pi pi-phone"></i>
+      </span>
+      <input pInputText 
+        placeholder="Số điện thoại" 
+        [(ngModel)]="newPhoneNumber" 
+        input="text" 
+        autocomplete="off" 
+        required 
+        autofocus
+        (ngModelChange)="validatePhoneNumber()"/>
+    </div>
+    <small *ngIf="phoneNumberError" class="p-error"> Vui lòng nhập số điện thoại 10-11 chữ số.</small>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Quay lại" class="p-button-text" (click)="updatePhoneNumberVisible = false"></button>
+    <button pButton pRipple label="Thay đổi" icon="pi pi-check" class="p-button-text pastel-bg text-light" (click)="updatePhoneNumber()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog 
+  header="Chỉnh sửa Profile" 
+  [style]="{ width: '50vw', height: '90vh' }"
+  [(visible)]="updatePasswordVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+  class="custom-dialog">
+  <span class="p-text-secondary block mb-5">Cập nhật mật khẩu của bạn.</span>
+  <div class="field password-field">
+    <form [formGroup]="updatePasswordForm">  
+      <p-password formControlName="oldPassword" 
+        [style]="{ margin: '1rem 0'}"
+        [toggleMask]="true"
+        [feedback]="false"
+        placeholder="Mật khẩu cũ"
+        class="custom-password">
+      </p-password>
+
+      <p-password formControlName="newPassword" 
+        [style]="{ margin: '1rem 0'}"
+        [toggleMask]="true"
+        [feedback]="true"
+        placeholder="Mật khẩu mới"
+        promptLabel="Nhập mật khẩu"
+        weakLabel="Đơn giản" 
+        mediumLabel="Trung bình" 
+        strongLabel="Hoàn hảo"
+        class="custom-password">
+          <ng-template pTemplate="header">
+            <h6>Mật khẩu</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+              <p-divider></p-divider>
+              <p class="mt-2">Lưu ý</p>
+              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li>Ít nhất 1 chữ thường</li>
+                  <li>Ít nhất 1 chữ in hoa</li>
+                  <li>Ít nhất 1 chữ số</li>
+                  <li>Ít nhất 1 kí tự đặc biệt</li>
+                  <li>Ít nhất 8 kí tự</li>
+              </ul>
+          </ng-template>
+      </p-password>
+      <small class="text-warning" *ngIf="updatePasswordForm.get('newPassword')!.invalid 
+                            && updatePasswordForm.get('newPassword')!.dirty">
+                                    Mục này phải bao gồm ít nhất 8 kí tự, trong đó có ít nhất 1 kí tự đặc biệt, 1 chữ
+                                    viết hoa, 1 chữ viết và 1 chữ số
+      </small>
+
+      <p-password formControlName="confirmedPassword" 
+        [style]="{ margin: '1rem 0'}"
+        [toggleMask]="true"
+        [feedback]="true"
+        placeholder="Xác nhận mật khẩu"
+        promptLabel="Nhập mật khẩu"
+        weakLabel="Đơn giản" 
+        mediumLabel="Trung bình" 
+        strongLabel="Hoàn hảo"
+        class="custom-password">
+          <ng-template pTemplate="header">
+            <h6>Mật khẩu</h6>
+          </ng-template>
+          <ng-template pTemplate="footer">
+              <p-divider></p-divider>
+              <p class="mt-2">Lưu ý</p>
+              <ul class="pl-2 ml-2 mt-0" style="line-height: 1.5">
+                  <li>Ít nhất 1 chữ thường</li>
+                  <li>Ít nhất 1 chữ in hoa</li>
+                  <li>Ít nhất 1 chữ số</li>
+                  <li>Ít nhất 1 kí tự đặc biệt</li>
+                  <li>Ít nhất 8 kí tự</li>
+              </ul>
+          </ng-template>
+      </p-password>
+      <small class="text-warning" *ngIf="updatePasswordForm.get('confirmedPassword')!.invalid 
+                            && updatePasswordForm.get('confirmedPassword')!.dirty">
+                                    Mục này phải giống mật khẩu
+      </small>
+    </form>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Quay lại" class="p-button-text" (click)="updatePasswordVisible = false"></button>
+    <button pButton pRipple label="Thay đổi" icon="pi pi-check" class="p-button-text pastel-bg text-light custom-button" (click)="updatePassword()"></button>
+  </ng-template>
+</p-dialog>
+
+<p-dialog 
+  header="Chỉnh sửa Profile" 
+  [style]="{ width: '50vw', height: 'auto' }"
+  [(visible)]="updateAvatarVisible" 
+  [modal]="true"
+  [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+  <span class="p-text-secondary block mb-5">Cập nhật Avatar của bạn.</span>
+
+  <div class="field">
+    <div class="row mt-2 d-flex flex-column">
+      <p-divider align="center">
+          <span class="text-secondary">Chọn ảnh đại diện</span>
+      </p-divider>
+      <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event)" hidden>
+      <button class="mx-auto my-4" type="button" mat-icon-button (click)="fileInput.click()"
+          [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
+          <mat-icon>{{!isImageSelected ? 'image' : 'download_done'}}</mat-icon>
+      </button>
+      <div *ngIf="isImageSelected" class="main-image-container">
+        <img [src]="getImagePreviewUrl()" alt="Profile Image" class="img-preview">
+      </div>
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <button pButton pRipple label="Quay lại" class="p-button-text" (click)="updateAvatarVisible = false"></button>
+    <button pButton pRipple label="Thay đổi" icon="pi pi-check" class="p-button-text pastel-bg text-light" (click)="updateAvatar()"></button>
+  </ng-template>
+</p-dialog>
+

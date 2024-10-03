@@ -1,0 +1,61 @@
+<app-loader [loader]="loading"></app-loader>
+<p-toast></p-toast>
+
+<div class="container">
+
+    <p-fieldset legend="Đường dẫn hình ảnh ở Carousel (Tối đa 5)">
+        <small class="text-danger fs-6">Nhập địa chỉ hình ảnh vào khung bên dưới rồi ấn enter hoặc dấu phẩy để tạo ra 1
+            hình ảnh</small>
+        <br>
+        <small class="text-danger fs-6">Bạn cũng có thể copy đường dẫn hình ảnh và paste vào sau đó ấn nút Cập nhật hình
+            ảnh ở cuối trang để cập nhật nhé</small>
+        <p-chips [max]="max" [(ngModel)]="imgs" separator="," />
+    </p-fieldset>
+
+    <p-divider></p-divider>
+
+    <p-fieldset legend="Đường dẫn 2 hình ảnh ở rìa bên phải (Tối đa 2)">
+        <small class="text-danger fs-6">Nhập địa chỉ hình ảnh vào khung bên dưới rồi ấn enter hoặc dấu phẩy để tạo ra 1
+            hình ảnh</small>
+        <br>
+        <small class="text-danger fs-6">Bạn cũng có thể copy đường dẫn hình ảnh và paste vào sau đó ấn nút Cập nhật hình
+            ảnh ở cuối trang để cập nhật nhé</small>
+        <p-chips [max]="subMax" [(ngModel)]="subimgs" separator="," />
+    </p-fieldset>
+
+    <p-divider></p-divider>
+
+    <p-fieldset legend="Lấy đường dẫn hình ảnh">
+        <div class="d-flex web-font">
+            <div class="col-4">
+                <form [formGroup]="getImageLinkForm" (ngSubmit)="onGetLink()" class="">
+                    <div class="row mt-2 d-flex flex-column">
+                        <input type="file" accept="image/*" #fileInput (change)="onFileSelected($event, 'image')"
+                            formControlName="image" hidden>
+                        <button class="mx-auto my-4" type="button" mat-icon-button (click)="fileInput.click()"
+                            [ngClass]="isImageSelected ? 'bg-success text-white':'text-dark'">
+                            <mat-icon>{{!isImageSelected ? 'image' : 'download_done'}}</mat-icon>
+                        </button>
+                        <button class="w-100" mat-stroked-button
+                            [ngClass]="{'text-secondary': !getImageLinkForm.valid, 'bg-success text-light': getImageLinkForm.valid}"
+                            [disabled]="!getImageLinkForm.valid">Lấy đường dẫn</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-8 ps-5 py-3 text-danger">
+                <p>Chọn hình ảnh ở khu vực bên trái và ấn vào nút lấy đường dẫn để tải ảnh lên máy chủ:</p>
+                <p>Sau khi lấy đường dẫn thành công, đường dẫn sẽ hiện ra dưới đây:</p>
+                <ng-container *ngIf="tempUrl">
+                    <p>Đường dẫn của bạn: {{tempUrl}}</p>
+                    <button [cdkCopyToClipboard]="tempUrl">Ấn vào đây để copy</button>
+                </ng-container>
+            </div>
+        </div>
+    </p-fieldset>
+
+    <p-divider></p-divider>
+    <button (click)="onClick()" class="my-5 text-light w-100 create-bid-button" mat-fab extended>
+        <mat-icon>image</mat-icon>
+        Cập nhật hình ảnh
+    </button>
+</div>

@@ -1,0 +1,79 @@
+.main-image-container {
+    background-color: ghostwhite;
+    height: 500px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px gray solid
+}
+
+.create-bid-button {
+    background-image: linear-gradient(to right, #649173 0%, #DBD5A4 51%, #649173 100%);
+    text-transform: uppercase;
+    transition: 0.5s;
+    background-size: 200% auto;
+    color: white;
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    display: flex;
+}
+
+.create-bid-button:hover {
+    background-position: right center;
+    /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+}
+
+:host>>> {
+    .p-chip {
+        background-color: #999b6d !important;
+        height: 34px;
+        margin-right: 10px;
+    }
+
+    .p-fileupload-content .p-fluid .p-fileupload .p-button {
+        width: 60px;
+    }
+
+    .p-progressbar .p-progressbar-value {
+        background-color: #999b6d !important;
+    }
+
+        .p-multiselect {
+            width: 100%;
+        }
+    
+        .p-inputnumber {
+            width: 100%;
+        }
+    
+        .p-fileupload .p-fileupload-buttonbar .p-button {
+            background-color: #999b6d !important;
+            border: none;
+        }
+    
+        .p-fileupload .p-fileupload-buttonbar .p-button:hover {
+            background-color: #7f8159 !important;
+        }
+        
+    
+        .p-button.p-button-icon-only {
+            background-color: #999b6d !important;
+            border: none;
+        }
+    
+        .p-button.p-button-icon-only:hover {
+            background-color: #7f8159 !important;
+        }
+    
+        .p-checkbox .p-checkbox-box.p-highlight {
+            border-color: #999b6d !important;
+            background: #999b6d !important;
+        }
+
+        .p-slider .p-slider-range {
+            background: #999b6d !important;
+        }
+}

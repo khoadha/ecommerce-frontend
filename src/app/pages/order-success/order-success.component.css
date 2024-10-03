@@ -1,0 +1,10 @@
+.auth-bg-image {
+    background-image: url('src\assets\images\auth-bg-image.jpg'); 
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center; /* Horizontally center content */
+    align-items: center; /* Vertically center content */
+    min-height: 100vh; /* Make the div take up at least the full viewport height */
+}

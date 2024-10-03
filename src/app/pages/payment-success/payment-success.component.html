@@ -1,0 +1,47 @@
+<div style="background-color: #999b6d68; height: 80vh;">
+    <div class="container-fluid pb-5">
+        <div class="row justify-content-center pt-5">
+            <h1 class="text-center fs-1 web-font pb-3 fw-bold" style="color: #77b43f;">THANH TOÁN THÀNH CÔNG!</h1>
+            <h3 class="text-center fs-3 web-font pb-3 text-secondary">Điểm WemadePay sẽ được cập nhật trong giây lát &nbsp;
+                <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem"></i>
+            </h3>
+            <div class="col-8">
+                <table class="table caption-top web-font table-hover table-borderless">
+                    <caption class="fw-bold">Thông tin thanh toán</caption>
+                    <thead class="table-light">
+                        <tr>
+                            <th scope="col-6">#</th>
+                            <th scope="col-6">Nội dung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th class="web-font" scope="row">Mã thanh toán:</th>
+                            <td class="web-font">{{transactionNo}}</td>
+                        </tr>
+                        <tr>
+                            <th class="web-font" scope="row">Tiền thanh toán:</th>
+                            <td class="web-font">{{amount | vndCurrencyPipe}}</td>
+                        </tr>
+                        <tr>
+                            <th class="web-font" scope="row">Mã ngân hàng:</th>
+                            <td class="web-font">{{bankCode}}</td>
+                        </tr>
+                        <tr>
+                            <th class="web-font" scope="row">Phương thức:</th>
+                            <td class="web-font">{{cardType}}</td>
+                        </tr>
+                        <tr>
+                            <th class="web-font" scope="row">Thông tin:</th>
+                            <td class="web-font">{{orderInfo}}</td>
+                        </tr>
+                        <tr>
+                            <th class="web-font" scope="row">Ngày thanh toán:</th>
+                            <td class="web-font">{{payDateTime| date:'medium'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

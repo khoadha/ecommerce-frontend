@@ -1,0 +1,144 @@
+:host >>> {
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+        border-color: #999b6d !important;
+        background: #999b6d !important;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-dropdown:not(.p-disabled).p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-dropdown:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+        color: #999b6d;
+        background: #c2c49028;
+    }
+
+    .p-focus {
+        border-color: #999b6d;
+    }
+
+    .p-inputtext:enabled:hover {
+        border-color: #ced4da;
+    }
+
+    .p-inputtext:enabled:focus {
+        border-color: #ced4da;
+    }
+
+    .p-inputtext-sm .p-inputtext {
+        width: 300px;
+    }
+
+    .increase-decrease-btn-container {
+
+        .p-inputnumber {
+            height: 20px;
+        }
+
+        .p-inputnumber-buttons-horizontal .p-inputnumber-input {
+            order: 2;
+            border-radius: 0;
+            width: 42px !important;
+        }
+
+        .p-button.p-button-icon-only {
+            width: 2rem;
+            height: auto;
+        }
+    }
+    
+
+    .p-multiselect:not(.p-disabled):hover {
+        border-color: #ced4da;
+    }
+
+    .p-multiselect:not(.p-disabled).p-focus {
+        border-color: #ced4da;
+        box-shadow: none;
+    }
+
+    .p-multiselect .p-multiselect-label {
+        max-width: 400px !important;
+    }
+
+    .p-multiselect-panel .p-multiselect-items .p-multiselect-item:focus {
+        box-shadow: none !important;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+        box-shadow: none !important;
+        border-color: #ced4da;
+    }
+
+    .p-multiselect-panel .p-multiselect-header .p-multiselect-close:focus {
+        box-shadow: none;
+    }
+
+    .p-multiselect-panel .p-multiselect-header .p-multiselect-close {
+        display: none;
+    }
+
+    .p-calendar .p-inputtext {
+        flex: 1 1 auto;
+        width: 300px;
+    }
+
+    textarea {
+        width: 300px;
+    }
+
+    .image-button-container {
+        height: 50px;
+    }
+
+    ::-webkit-scrollbar {
+        width: 4px;
+    }
+    
+    ::-webkit-scrollbar-thumb {
+        background-color: #999b6d;
+    }
+
+    .p-divider-horizontal.p-divider-center {
+        margin-top: 0px;
+    }
+
+    .mat-mdc-card {
+        position: relative;
+        width: fit-content;
+        margin: 0 10px;
+    }
+
+    
+
+    .p-image-preview-container>img {
+        cursor: pointer;
+        border-radius: 10px;
+    }
+} 
+
+.main-image-container {
+    background-color: ghostwhite; 
+    height: 500px; 
+    width: 100%; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    border: 1px gray solid
+}

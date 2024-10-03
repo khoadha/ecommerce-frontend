@@ -1,0 +1,214 @@
+<app-breadcrumb [items]="breadcrumbItems"></app-breadcrumb>
+<app-loader [loader]="maskLoading"></app-loader>
+<p-toast></p-toast>
+<div class="auth-bg-image">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="text-center fs-1 text-dark my-5 web-font">Tiến hành thanh toán</h1>
+      <div class="my-3">
+        <mat-stepper orientation="vertical" #stepper linear>
+          <mat-step [stepControl]="addressFormGroup" errorMessage="Địa chỉ là cần thiết." class="vh-100">
+            <form [formGroup]="addressFormGroup" class="mt-5">
+              <ng-template matStepLabel>Chọn địa chỉ của bạn</ng-template>
+              <div class="w-100 mb-3 d-flex justify-content-center">
+                <mat-form-field class="mx-2">
+                  <mat-label>Chọn thành phố, tỉnh</mat-label>
+                  <mat-select (selectionChange)="loadDistrictsData($event.value)" formControlName="cityControl" required>
+                    <mat-option *ngFor="let province of listProvinces" [value]="province">
+                      {{province.ProvinceName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="mx-2">
+                  <mat-label>Chọn quận, huyện</mat-label>
+                  <mat-select (selectionChange)="loadWardsData($event.value)" formControlName="districtControl" required>
+                    <mat-option *ngFor="let district of listDistricts" [value]="district">
+                      {{district.DistrictName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="mx-2">
+                  <mat-label>Chọn phường, xã</mat-label>
+                  <mat-select (selectionChange)="onWardSelect($event.value)" formControlName="wardControl" required>
+                    <mat-option *ngFor="let ward of listWards" [value]="ward">
+                      {{ward.WardName}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="mx-2">
+                  <mat-label>Địa chỉ nhà</mat-label>
+                  <input matInput placeholder="Ví dụ: 393/6 Trần Hưng Đạo" formControlName="streetControl" required>
+                </mat-form-field>
+              </div>
+            </form>
+            <div class="me-5 mb-4" align="end">
+              <button (click)="onSubmitAddressData()"
+                [ngClass]="{'text-light': !addressFormGroup.valid, 'text-light pastel-bg': addressFormGroup.valid}" mat-stroked-button
+                matStepperNext [disabled]="addressFormGroup.invalid">Bước
+                kế tiếp</button>
+            </div>
+          </mat-step>
+
+          <mat-step>
+            <ng-template matStepLabel>Xem lại đơn hàng</ng-template>
+            <ng-container *ngIf="isLoading; else orderData">
+              <div class="d-flex justify-content-center my-5">
+                <div class="loader pastel">  
+                  <div style="width: 80px; height: 80px;" class="spinner-border" role="status">
+                      <span class="visually-hidden">Loading...</span>
+                    </div>
+              </div>  
+              </div>
+              <div class="text-center fs-3 text-dark mb-5">Đợi một xíu nha, tổng chi phí đang được tính toán...</div>
+            </ng-container>
+            <ng-template #orderData>
+              <div class="d-flex flex-column align-items-center my-5 py-5 w-100">
+                <ng-container *ngFor="let store of dataSource">
+                  <div class="mb-5" style="width: 90%;">
+                    <p-fieldset>
+                      <ng-template pTemplate="header">
+                        <div class="d-flex flex-row my-3 ms-3 align-items-center">
+                          <div><img class="img-fluid store-img m-auto" [src]="store.storeImgPath"></div>
+                          <div class="web-font fs-4 ms-3">{{store.storeName}}</div>
+                        </div>
+                      </ng-template>
+                      <div class="w-100">
+                        <p-table [value]="store.items" [tableStyle]="{'width': '100%'}">
+                          <ng-template pTemplate="header">
+                            <tr>
+                              <th class="web-font" style="width:20rem">Tên sản phẩm</th>
+                              <th class="web-font" style="width:4rem">Hình ảnh</th>
+                              <th class="web-font" style="width:4rem">Đơn giá</th>
+                              <th class="web-font" style="width:4rem">Số lượng</th>
+                              <th class="web-font" style="width:4rem">Thành tiền</th>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="body" let-item>
+                            <tr>
+                              <td class="web-font" style="width:20rem">{{item.product.name}}</td>
+                              <td class="web-font" style="width:4rem"><img [src]="item.product.imgPath"
+                                  [alt]="item.product.name" width="100" class="shadow-4" /></td>
+                              <td class="web-font" style="width:4rem">{{item.product.price| vndCurrencyPipe}}</td>
+                              <td class="web-font" style="width:4rem">{{item.quantity}}</td>
+                              <td class="web-font" style="width:4rem">{{item.cost| vndCurrencyPipe}}</td>
+                            </tr>
+                          </ng-template>
+                          <ng-template pTemplate="summary">
+                            <div class="d-flex flex-row align-items-center justify-content-between">
+                              <div></div>
+                              <mat-card>
+                                <mat-card-content>
+                                  <div class="d-flex flex-row">
+                                    <div class="d-flex flex-column gap-2" style="min-width: 300px;">
+                                      <div class="web-font">Phí sản phẩm:</div>
+                                      <div class="web-font">Phí giao hàng (miễn phí):</div>
+                                      <div class="web-font">Phí nền tảng:
+                                      </div>
+                                      <div class="web-font">Tổng thanh toán ({{store.items ? store.items.length : 0 }}
+                                        sản phẩm):</div>
+                                    </div>
+                                    <div class="d-flex flex-column gap-2">
+                                      <div class="web-font pastel"> {{ store.productsPrice | vndCurrencyPipe}}</div>
+                                      <!-- <div class="web-font pastel"> <del style="color: brown;">{{store.shippingPriceTemp | vndCurrencyPipe}}</del> {{ store.shippingPrice | vndCurrencyPipe}}</div> -->
+                                      <div class="web-font pastel"> <del style="color: brown;">{{20000 | vndCurrencyPipe}}</del> {{ 0 | vndCurrencyPipe}}</div>
+                                      <div class="web-font pastel"> {{ store.platformPrice | vndCurrencyPipe}}</div>
+                                      <div class="web-font pastel"> {{ store.totalCost | vndCurrencyPipe}}</div>
+                                    </div>
+                                  </div>
+                                </mat-card-content>
+                              </mat-card>
+                            </div>
+                          </ng-template>
+                        </p-table>
+                      </div>
+                    </p-fieldset>
+                  </div>
+                </ng-container>
+                <hr class="hr">
+              </div>
+              <div class="me-5 mb-4" align="end">
+                <button mat-button matStepperPrevious (click)="resetPage()">Chọn địa chỉ khác</button>
+                <button [ngClass]="{'text-light': !addressFormGroup.valid, 'text-light pastel-bg': addressFormGroup.valid}" mat-stroked-button
+                matStepperNext [disabled]="addressFormGroup.invalid">Bước kế tiếp</button>
+              </div>
+            </ng-template>
+          </mat-step>
+          <mat-step>
+            <ng-template matStepLabel>Chọn phương thức thanh toán</ng-template>
+            <div class="d-flex flex-column gap-3 align-items-center">
+              <div class="d-flex flex-row gap-4 mt-5 mb-3">
+                <div>
+                  <p-radioButton value="cod" [(ngModel)]="selectedShipOption" inputId="ship1"></p-radioButton>
+                  <label class="ms-2" for="ship1">Thanh toán khi nhận hàng</label>
+                </div>
+                <div>
+                  <p-radioButton value="wmp" [(ngModel)]="selectedShipOption" inputId="ship2"></p-radioButton>
+                  <label class="ms-2" for="ship2">Thanh toán bằng WemadePay</label>
+                </div>
+              </div>
+              <div>
+                <ng-container *ngIf="selectedShipOption=='cod'">
+                  <mat-card style="width: fit-content; background-color: ghostwhite;">
+                    <mat-card-content>
+                      <div class="d-flex flex-row">
+                        <div class="d-flex flex-column gap-2" style="min-width: 240px;">
+                          <div class="web-font">Tổng thanh toán:</div>
+                        </div>
+                        <div class="d-flex flex-column gap-2">
+                          <div class="web-font pastel fw-bold"> {{total | vndCurrencyPipe}}</div>
+                        </div>
+                      </div>
+                      <ng-container *ngIf="!isValidToUsePoint()">
+                        <div class="warning">
+                          <small class="text-danger">*Điểm còn lại không đủ để thanh toán!</small>
+                        </div>
+                      </ng-container>
+                    </mat-card-content>
+                  </mat-card>
+                </ng-container>
+                <ng-container *ngIf="selectedShipOption=='wmp'">
+                  <div class="p-inputgroup mb-3">
+                    <input type="text" pInputText placeholder="Nhập mã voucher tại đây" [(ngModel)]="voucherCode"/>
+                    <button (click)="onCheckVoucherAvailable()" type="button" pButton icon="pi pi-search" class="pastel-bg text-light"></button>
+                </div>
+                  <mat-card style="width: fit-content; background-color: ghostwhite;">
+                    <mat-card-content>
+                      <div class="d-flex flex-row">
+                        <div class="d-flex flex-column gap-2" style="width: 400px;">
+                          <div class="web-font">Điểm hiện tại của bạn:</div> <!-- 1 -->
+                          <div class="web-font">Điểm cần dùng:</div>
+                          <div class="web-font">Điểm khuyến mãi:</div>
+                          <div class="web-font">Điểm cần dùng sau khi áp dụng khuyến mãi:</div>
+                          <div class="web-font">Điểm còn lại:</div>
+                        </div>
+                        <div class="d-flex flex-column gap-2">
+                          <div class="web-font pastel fw-bold"> {{point}}</div> <!-- 1 -->
+                          <div class="web-font pastel fw-bold"> {{pointNeedToPayment}}</div>
+                          <div class="web-font pastel fw-bold"> {{availableDiscountPoint}}</div>
+                          <div class="web-font pastel fw-bold"> {{pointNeedToPaymentAfterCheckout}}</div>
+                          <div class="web-font pastel fw-bold"> {{point - pointNeedToPaymentAfterCheckout}}</div>
+                        </div>
+                      </div>
+                      <ng-container *ngIf="!isValidToUsePoint()">
+                        <div class="warning">
+                          <small class="text-danger">*Điểm còn lại không đủ để thanh toán!</small>
+                        </div>
+                      </ng-container>
+                    </mat-card-content>
+                  </mat-card>
+                </ng-container>
+              </div>
+            </div>
+            <div class="me-5 my-4" align="end">
+            <button (click)="onConfirmOrder()" [ngClass]="{'text-light': !isValidToUsePoint(), 'text-light pastel-bg': isValidToUsePoint()}" mat-stroked-button
+                matStepperNext [disabled]="!isValidToUsePoint()">Hoàn tất thanh toán</button>
+            </div>
+          </mat-step>
+          <!-- <mat-step>
+            <ng-template matStepLabel>Hoàn tất đơn hàng</ng-template>
+          </mat-step> -->
+        </mat-stepper>
+      </div>
+    </div>
+  </div>
+</div>

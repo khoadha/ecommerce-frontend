@@ -1,0 +1,85 @@
+<div class="d-flex flex-column gap-3">
+    <div class="web-font">Ngày đặt hàng: {{order.orderDate|date:'shortDate'}}</div>
+    <div class="web-font">Ngày giao hàng: {{order.shipDate|date:'shortDate'}}</div>
+    <div class="web-font">Địa chỉ người nhận: {{order.userAddress}}</div>
+    <div class="web-font">Tên người nhận: {{order.customerName}}</div>
+    <div class="web-font">Phí giao hàng: {{order.shippingCost|vndCurrencyPipe}}</div>
+    <div class="web-font">Tổng thanh toán: {{order.totalCost|vndCurrencyPipe}}</div>
+    <div class="d-flex web-font flex-row gap-2">Trạng thái:
+        <ng-container [ngSwitch]="order.status">
+            <ng-container *ngSwitchCase="1">
+                <p-tag severity="danger" value="Đã bị hủy"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="2">
+                <p-tag severity="info" value="Chờ xác nhận"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="3">
+                <p-tag severity="warning" value="Đã xác nhận"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="4">
+                <p-tag severity="success" value="Hoàn thành"></p-tag>
+            </ng-container>
+        </ng-container>
+    </div>
+    <div class="d-flex web-font flex-row gap-2">Tình trạng:
+        <ng-container [ngSwitch]="order.isPaid">
+            <ng-container *ngSwitchCase="false">
+                <p-tag severity="warning" value="Chưa thanh toán"></p-tag>
+            </ng-container>
+            <ng-container *ngSwitchCase="true">
+                <p-tag severity="success" value="Đã thanh toán"></p-tag>
+            </ng-container>
+        </ng-container>
+    </div>
+</div>
+
+<div class="d-flex flex-row align-items-center justify-content-end">
+    <ng-container *ngIf="role==='manager'; else user">
+        <div>
+            <ng-container *ngIf="order.status==2">
+                <button class="text-light bg-danger" mat-raised-button (click)="onCancelOrder(order.id!)">Hủy đơn
+                    hàng</button>
+                <button class="text-light bg-warning ms-2" mat-raised-button (click)="onConfirmOrder(order.id!)">Xác
+                    nhận</button>
+            </ng-container>
+        </div>
+        <div>
+            <ng-container *ngIf="order.status==3">
+                <button class="text-light bg-danger" mat-raised-button (click)="onCancelOrder(order.id!)">Hủy đơn
+                    hàng</button>
+                <button class="text-light bg-success ms-2" mat-raised-button (click)="onCompleteOrder(order.id!)">Hoàn
+                    thành</button>
+            </ng-container>
+        </div>
+    </ng-container>
+    <ng-template #user>
+        <ng-container *ngIf="order.status==2">
+            <button class="text-light bg-danger" mat-raised-button (click)="onCancelOrder(order.id!)">Hủy đơn hàng</button>
+        </ng-container>
+    </ng-template>
+</div>
+
+
+
+<div class="card mt-4">
+    <p-table [value]="order.orderItems" [tableStyle]="{ 'min-width': '50rem' }">
+        <ng-template pTemplate="header">
+            <tr>
+                <th>Tên sản phẩm</th>
+                <th>Hình ảnh</th>
+                <th>Giá tiền</th>
+                <th>Số lượng</th>
+                <th>Thành tiền</th>
+            </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item>
+            <tr>
+                <td>{{item.productName}}</td>
+                <td><img [src]="item.productImagePath" style="width: 90px; height: 80px;"></td>
+                <td>{{item.productPrice|vndCurrencyPipe}}</td>
+                <td>{{item.quantity}}</td>
+                <td>{{item.cost|vndCurrencyPipe}}</td>
+            </tr>
+        </ng-template>
+    </p-table>
+</div>

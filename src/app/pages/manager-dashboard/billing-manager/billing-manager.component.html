@@ -1,0 +1,171 @@
+<ng-container *ngIf="billings && availableOrders && boughtPackage && calculateData">
+    <div class="container mt-4 web-font">
+        <h1 class="text-center my-5">Lịch sử yêu cầu thanh toán</h1>
+        <div class="card">
+            <p-table #dt [value]="billings" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} yêu cầu">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex align-items-center">
+                                #
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Thời gian tạo
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Tổng thanh toán
+                                <p-columnFilter type="numeric" field="totalCost" display="menu" currency="vnd"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Trạng thái
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order>
+                    <tr>
+                        <td>
+                            {{order.id}}
+                        </td>
+                        <td>
+                            {{order.createdDate | date:'short'}}
+                        </td>
+                        <td>
+                            {{ order.totalBill|vndCurrencyPipe }}
+                        </td>
+                        <td>
+                            <ng-container [ngSwitch]="order.status">
+                                <ng-container *ngSwitchCase="1">
+                                    <p-tag severity="danger" value="Đã từ chối"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="0">
+                                    <p-tag severity="info" value="Chờ xác nhận"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="2">
+                                    <p-tag severity="success" value="Đã hoàn thành"></p-tag>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No products found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <h1 class="text-center my-5">Danh sách đơn hàng có thể tạo đơn yêu cầu rút tiền</h1>
+        <div class="card">
+            <p-table #dt [value]="availableOrders" dataKey="id" [rows]="10" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[10, 25, 50]" [loading]="loading" [paginator]="true"
+                currentPageReportTemplate="Hiển thị từ {first} đến {last} của {totalRecords} đơn hàng">
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th>
+                            <div class="flex align-items-center">
+                                #
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Ngày đặt hàng
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Ngày hoàn tất
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Tổng thanh toán
+                                <p-columnFilter type="numeric" field="totalCost" display="menu" currency="vnd"></p-columnFilter>
+                            </div>
+                        </th>
+                        <th>
+                            <div class="flex align-items-center">
+                                Trạng thái
+                            </div>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-order>
+                    <tr>
+                        <td>
+                            {{order.id}}
+                        </td>
+                        <td>
+                            {{order.orderDate | date:'short'}}
+                        </td>
+                        <td>
+                            <ng-container *ngIf="order.shipDate==null; else shipped">
+                                Chưa có dữ liệu
+                            </ng-container>
+                            <ng-template #shipped>
+                                {{order.shipDate | date:'short'}}
+                            </ng-template>
+                        </td>
+                        <td>
+                            {{ order.totalCost|vndCurrencyPipe }}
+                        </td>
+                        <td>
+                            <ng-container [ngSwitch]="order.status">
+                                <ng-container *ngSwitchCase="1">
+                                    <p-tag severity="danger" value="Đã bị hủy"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="2">
+                                    <p-tag severity="info" value="Chờ xác nhận"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="3">
+                                    <p-tag severity="warning" value="Đã xác nhận"></p-tag>
+                                </ng-container>
+                                <ng-container *ngSwitchCase="4">
+                                    <p-tag severity="success" value="Hoàn thành"></p-tag>
+                                </ng-container>
+                            </ng-container>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="emptymessage">
+                    <tr>
+                        <td colspan="7">No products found.</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="mt-4 row d-flex justify-content-between">
+            <div class="card" style="width: 49%">
+                <div class="card-body">
+                    <h4>Gói hiện tại của bạn</h4>
+                    <div>Tên: {{boughtPackage.package.name}}</div>
+                <div>Mô tả: {{boughtPackage.package.description}}</div>
+                <div>Phần trăm hoàn: {{boughtPackage.package.percentage*10 | percent}}</div>
+                <div>Ngày hết hạn: {{boughtPackage.expired | date:'shortDate' }}</div>
+                </div>
+            </div>
+            <div class="card" style="width: 49%">
+                <div class="card-body">
+                <h4>Thông tin đơn yêu cầu rút tiền</h4>
+                <div class="">Gói áp dụng: {{boughtPackage.package.name}}</div>
+                <div class="">Tổng tiền: {{calculateData.totalCost | vndCurrencyPipe}}</div>
+                <div class="">Phí hoàn lại: {{calculateData.totalCost-calculateData.finalCost | vndCurrencyPipe}}</div>
+                <div class="fs-3 fw-bold pastel">Thực nhận: {{calculateData.finalCost | vndCurrencyPipe}}</div>
+                </div>
+            </div>
+        </div>
+        
+        <button (click)="onClick()" class="my-5 text-light w-100 create-bid-button" mat-fab extended>
+            Gửi yêu cầu
+        </button>
+    </div>
+</ng-container>
